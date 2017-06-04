@@ -1,34 +1,12 @@
-# Angular QuickStart Source
+# Angular Hero App 
 [![Build Status][travis-badge]][travis-badge-url]
 
 This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
-the foundation for most of the documentation samples and potentially a good starting point for your application.
+modified to connect to a real-time firebase database. The application uses [materialize css](http://materializecss.com/) for the css styles.
 
-It's been extended with testing support so you can start writing tests immediately.
+This app does have issues in general design and integration with firebase, like multi browser on same view get data and actions on one browser affecting the other. The intention is to explore the possiblities and power of angular4 and typescript generally.
 
-**This is not the perfect arrangement for your application. It is not designed for production.
-It exists primarily to get you started quickly with learning and prototyping in Angular**
-
-We are unlikely to accept suggestions about how to grow this QuickStart into something it is not.
-Please keep that in mind before posting issues and PRs.
-
-## Updating to a newer version of the Quickstart Repo
-
-From time to time the QuickStart will be enhanced with support for new features or to reflect
-changes to the [official Style Guide](https://angular.io/docs/ts/latest/guide/style-guide.html).
-
-You can update your existing project to an up-to-date QuickStart by following these instructions:
-- Create a new project using the [instructions below](#create-a-new-project-based-on-the-quickstart)
-- Copy the code you have in your project's `main.ts` file onto `src/app/main.ts` in the new project
-- Copy your old `app` folder into `src/app`
-- Delete `src/app/main.ts` if you have one (we now use `src/main.ts` instead)
-- Copy your old `index.html`, `styles.css` and `tsconfig.json` into `src/`
-- Install all your third party dependencies
-- Copy your old `e2e/` folder into `e2e/`
-- Copy over any other files you added to your project
-- Copy your old `.git` folder into your new project's root
-
-Now you can continue working on the new project.
+Same scenario would have different implementations within the app and that is completely intentional. The source can be used as a general starting point for a normal CRUD and can be build upon. The firebase integration in this app is not be followed (as I'm not a firebase ex[ert, we only needed a database store hence the implementaion is not perfect), we recommend replacing it with a web api for data and storage.
 
 ## Prerequisites
 
@@ -43,21 +21,27 @@ Older versions produce errors.
 
 We recommend [nvm](https://github.com/creationix/nvm) for managing multiple versions of node and npm.
 
-## Create a new project based on the QuickStart
+## Cloning the repo
 
-Clone this repo into new project folder (e.g., `my-proj`).
+Clone this repo into new project folder (e.g., `hero-db`).
 ```shell
-git clone https://github.com/angular/quickstart  my-proj
-cd my-proj
-```
+git clone https://github.com/angular/quickstart  hero-db
+cd hero-db
 
-We have no intention of updating the source on `angular/quickstart`.
+```
 Discard the `.git` folder..
 ```shell
 rm -rf .git  # OS/X (bash)
 rd .git /S/Q # windows
 ```
+
+## Firebase Config Set Up
+
+One would need a firebase account and application to integrate it with this application. Create your own firebase app and retrieve the config key into src/app/modules/config/config.module.ts. The current code will have only an empty settings as we do not want anyone to update our repository.
+
 ### Delete _non-essential_ files (optional)
+
+*Note: no new testcases were written in this app, the existing tests on angular 4 quickstart is still preserved.
 
 You can quickly delete the _non-essential_ files that concern testing and QuickStart repository maintenance
 (***including all git-related artifacts*** such as the `.git` folder and `.gitignore`!)
@@ -75,28 +59,6 @@ rm non-essential-files.osx.txt
 for /f %i in (non-essential-files.txt) do del %i /F /S /Q
 rd .git /s /q
 rd e2e /s /q
-```
-
-### Create a new git repo
-You could [start writing code](#start-development) now and throw it all away when you're done.
-If you'd rather preserve your work under source control, consider taking the following steps.
-
-Initialize this project as a *local git repo* and make the first commit:
-```shell
-git init
-git add .
-git commit -m "Initial commit"
-```
-
->Recover the deleted `.gitignore` from the QuickStart repository 
-if you lost it in the _Delete non-essential files_ step.
-
-Create a *remote repository* for this project on the service of your choice.
-
-Grab its address (e.g. *`https://github.com/<my-org>/my-proj.git`*) and push the *local repo* to the *remote*.
-```shell
-git remote add origin <repo-address>
-git push -u origin master
 ```
 ## Install npm packages
 
@@ -121,7 +83,9 @@ You're ready to write your application.
 
 ### npm scripts
 
-We've captured many of the most useful commands in npm scripts defined in the `package.json`:
+The npm installations from the original angular quickstart is available below.
+
+"We've captured many of the most useful commands in npm scripts defined in the `package.json`:
 
 * `npm start` - runs the compiler and a server at the same time, both in "watch mode".
 * `npm run build` - runs the TypeScript compiler once.
@@ -131,57 +95,18 @@ We've captured many of the most useful commands in npm scripts defined in the `p
 [Christopher Martin](https://github.com/cgmartin)
 with excellent support for Angular apps that use routing.
 
-Here are the test related scripts:
-* `npm test` - compiles, runs and watches the karma unit tests
-* `npm run e2e` - compiles and run protractor e2e tests, written in Typescript (*e2e-spec.ts)
+## Seed the database
 
-## Testing
+The seed.js file contains the necessary code to setup your firebase database with initial data. This should export data from data/hero-db.json and images from data/images. Do not forget to update the seed.config.json with your firebase api config to connect to your firebase account. Make sure that the authentication on your firebase app is turned off for the database and storage during the seed installation. One can run the seed file with command
 
-The QuickStart documentation doesn't discuss testing.
-This repo adds both karma/jasmine unit test and protractor end-to-end testing support.
+```shell
 
-These tools are configured for specific conventions described below.
+    npm run seed
 
-*It is unwise and rarely possible to run the application, the unit tests, and the e2e tests at the same time.
-We recommend that you shut down one before starting another.*
+```
 
-### Unit Tests
-TypeScript unit-tests are usually in the `src/app` folder. Their filenames must end in `.spec.ts`.
+Once the seed is run successfully, turn on the authentication features on your firebase app. The rules for db is available in data/rules.json. One would need to manually copy paste these rules in the Firebase data.
 
-Look for the example `src/app/app.component.spec.ts`.
-Add more `.spec.ts` files as you wish; we configured karma to find them.
+## Authentication
+The app allows Google, facebook, twitter and email sign in with firebase app. Do make sure that these features are turned on your firebase app.
 
-Run it with `npm test`
-
-That command first compiles the application, then simultaneously re-compiles and runs the karma test-runner.
-Both the compiler and the karma watch for (different) file changes.
-
-Shut it down manually with `Ctrl-C`.
-
-Test-runner output appears in the terminal window.
-We can update our app and our tests in real-time, keeping a weather eye on the console for broken tests.
-Karma is occasionally confused and it is often necessary to shut down its browser or even shut the command down (`Ctrl-C`) and
-restart it. No worries; it's pretty quick.
-
-### End-to-end (E2E) Tests
-
-E2E tests are in the `e2e` directory, side by side with the `src` folder.
-Their filenames must end in `.e2e-spec.ts`.
-
-Look for the example `e2e/app.e2e-spec.ts`.
-Add more `.e2e-spec.js` files as you wish (although one usually suffices for small projects);
-we configured Protractor to find them.
-
-Thereafter, run them with `npm run e2e`.
-
-That command first compiles, then simultaneously starts the `lite-server` at `localhost:8080`
-and launches Protractor.  
-
-The pass/fail test results appear at the bottom of the terminal window.
-A custom reporter (see `protractor.config.js`) generates a  `./_test-output/protractor-results.txt` file
-which is easier to read; this file is excluded from source control.
-
-Shut it down manually with `Ctrl-C`.
-
-[travis-badge]: https://travis-ci.org/angular/quickstart.svg?branch=master
-[travis-badge-url]: https://travis-ci.org/angular/quickstart

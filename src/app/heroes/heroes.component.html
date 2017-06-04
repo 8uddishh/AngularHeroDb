@@ -1,0 +1,70 @@
+<div class="row heroes-content">
+  <div class="col s12">
+          <div class="card panel">
+            <div class="card-content">
+              
+              <div class="card-title">
+                <div class="card-title-legend fa fa-users fa-2x" ></div>
+                <div class="card-title-text">
+                  All Heroes
+                </div>
+
+                <div *ngIf="!canSave" class="card-title-action right">
+                       <a class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                    <form #heroForm="ngForm" (ngSubmit)="add()" class="hero-form" novalidate>
+                    <div class="card-title-action right">
+                        <button type="submit" *ngIf="canSave" [disabled]="!heroForm.form.valid" class="btn-floating btn-large waves-effect waves-light green dropdown-button">
+                            <i class="fa fa-save"></i>
+                        </button>
+                        <button type="button" *ngIf="canSave" class="btn-floating btn-large waves-effect waves-light red dropdown-button" (click)="clear();">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div *ngIf="canSave" class="row container-row scale-transition" [ngClass]="{'scale-out': !canSave }">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input [(ngModel)]="newHero.name" name="name" id="new-hero-name" type="text" class="validate" 
+                                #name="ngModel" required>
+                            <label for="new-hero-name">Hero name</label>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="input-field col s12">
+                          <select class="browser-default" [(ngModel)]="newHero.publisherId" name="publisherId"  #publisherId="ngModel" required>
+                              <option value="">Choose publication</option>
+                              <!-- you can use ngValue to bind an object that would mean I have to bring publisher as an object into
+                              hero object instead of just the foreign key... so just using id  -->
+                              <option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</option>
+                            </select>
+                            <label class="active">Publication</label>
+                          </div>
+                        </div>
+                    </div>
+                    </form>
+              </div>
+
+              <div class="row container-row">
+                <div class="col s3 card-list" *ngFor="let hero of heroes">
+                  <div class="card">
+                    <div class="card-image">
+                      <img [src]="hero.coverPicUrl ? hero.coverPicUrl : './images/image-not-found.png'">
+                      <div class="card-title" [ngStyle]="getPublisherStyle(hero.publisherId)" >{{hero.name}}</div>
+                      <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(hero); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-action">
+                        <button (click)="view(hero)" class="waves-effect waves-light teal btn btn-block"><i class="fa fa-search"></i> View</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>

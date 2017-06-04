@@ -1,0 +1,106 @@
+<div *ngIf="hero" class="row heroes-content">
+  <div class="col s12">
+          <div class="card panel">
+            <div class="card-content">
+              
+              <div class="card-title">
+                <div class="card-title-legend fa fa-comments-o fa-2x" ></div>
+                <div class="card-title-text">
+                  Quotes of {{hero.name}}
+                </div>
+                <div class="hero-profile" >
+                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row fix"></div>
+                <div class="row">
+                  <ul>
+                    <li class="col s6" *ngFor="let quote of quotes;let i= index">
+                      <blockquote *ngIf="!quote.canEdit" (click)="quote.canEdit=true" class="valign-wrapper" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                        [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
+                          <div class="row">{{quote.name | quoteBeautify}}</div>
+                          <div>
+                            <button (click)="delete(quote.id)" class="btn-floating btn-small waves-effect waves-light red delete"><i class="fa fa-times"></i></button>
+                          </div>
+                        </blockquote>
+                        <blockquote *ngIf="quote.canEdit" class="valign-wrapper canEdit" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                        [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <textarea [(ngModel)]="quote.name" [id]="'edit-quote-name-' + quote.id" class="materialize-textarea validate" required></textarea>
+                            <label [for]="'edit-quote-name-' + quote.id">Quote text</label>
+                            </div>
+                            <div class="fixed-action-btn horizontal edit">
+                                <button class="btn-floating btn waves-effect waves-light" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                                          [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" 
+                                          [class.joy]="quote.emotion == '5'" (click)="save(quote, quote.emotion)"
+                                          [title]="quote.emotion == '1' ? 'Anger' : quote.emotion == '2' ? 'Satire' : quote.emotion == '3' ? 'Sad' : quote.emotion == '4' ? 'Disgust' : quote.emotion == '5' ? 'Joy' : 'Normal'" >
+                                  <i class="fa fa-save"></i>
+                                </button>
+                                <ul>
+                                  <li *ngFor="let color of restofColors(quote)">
+                                    <a class="btn-floating" [class.anger]="color.key == '1'" [class.satire]="color.key == '2'" 
+                                          [class.sad]="color.key == '3'" [class.disgust]="color.key == '4'" 
+                                          [class.joy]="color.key == '5'" (click)="save(quote, color.key)"
+                                          [title]="color.key == '1' ? 'Anger' : color.key== '2' ? 'Satire' : color.key == '3' ? 'Sad' : color.key == '4' ? 'Disgust' : color.key == '5' ? 'Joy' : 'Normal'">
+                                      <i class="fa fa-save"></i>
+                                    </a>
+                                  </li>
+                                </ul>
+                            </div>
+                            
+                            <button (click)="undo(quote)" class="btn-floating btn waves-effect waves-light yellow darken-1 cancel"><i class="fa fa-undo"></i></button>
+                          </div>
+                        </blockquote>
+                    </li>
+                  </ul>                 
+                </div>
+              </div>
+            </div>
+
+            <div class="card-action">
+                <button class="btn" (click)="canAdd=true"><i class="fa fa-plus-circle"></i> New Quote</button>
+              </div>
+          </div>
+        </div>
+
+    <form #quoteForm="ngForm" (ngSubmit)="add()" class="quote-form" novalidate>
+        <div *ngIf="canAdd" class="col s12 newQuote">
+              <div class="modal bottom-sheet open">
+                <div class="modal-content">
+                  <div class="row">
+                      <div class="col s11 offset-s1">
+                          <h5><i class="fa fa-comments-o"></i> New Quote</h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col s11 offset-s1">
+                        <textarea [(ngModel)]="newQuote.name" name="name" id="new-quote-name" class="materialize-textarea validate"
+                          #name="ngModel" required></textarea>
+                        <label for="new-quote-name">Quote text</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                          <div class="input-field col s11 offset-s1">
+                          <select class="browser-default" [(ngModel)]="newQuote.emotion" name="emotion" #emotion="ngModel" required>
+                              <option value="">Choose emotion</option>
+                              <option *ngFor="let emotion of quoteEmotions" [value]="emotion.key">{{emotion.value}}</option>
+                            </select>
+                            <label class="active">Emotion</label>
+                          </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!quoteForm.form.valid" >
+                    <i class="fa fa-plus"></i> Add Quote</button>
+                  <button class="modal-action modal-close waves-effect waves-light red btn" (click)="canAdd=false" >
+                    <i class="fa fa-times-circle"></i> Cancel</button>
+                </div>
+              </div>
+        </div>  
+
+        <div *ngIf="canAdd" class="modal-overlay"></div>
+        </form>
+</div>

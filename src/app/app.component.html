@@ -1,0 +1,67 @@
+<!-- Top Navigation -->
+<div class="navbar-fixed top-nav">
+  <nav class="nav navbar">
+    <div class="nav-wrapper">
+      <div class="row">
+        <div class="col s3">
+          <a class="btn-floating btn-large waves-effect waves-light blue"><i class="fa fa-bars"></i></a>
+          <a href="#!" class="brand-logo">ng-Heroes</a>
+        </div>
+        <div class="col s9 nopad">
+          
+          <ul class="right">
+           
+            <li *ngIf="!userLoggedIn">
+              <a (click)="requestLogin=!requestLogin">
+                <div class="row">
+                  <div class="col s12">Sign In</div>
+                </div>
+              </a>
+            </li>
+            <li *ngIf="userLoggedIn">
+              <a>
+                <div class="row">
+                  <div class="col s3 user-box">
+                    <img [src]="user.photoUrl" class="responsive-img circle">
+                  </div>
+                  <div class="col s9">{{user.displayName | textBeautify}}</div>
+                </div>
+              </a>
+            </li>
+
+            <li *ngIf="userLoggedIn">
+              <a (click)="signOut()">
+                <div class="row">
+                  <div class="col s12">Sign Out</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- Bread crumb  -->
+<my-bread-crumb></my-bread-crumb>
+
+<!-- Side Navigation -->
+<my-menu></my-menu>
+
+<!-- Right Nav -->
+<ul *ngIf="requestLogin && !userLoggedIn" id="nav-mobile" class="side-nav sn-bg fixed right-nav">
+  <li class="right-item">
+    <my-login></my-login>
+  </li>
+  <div class="sidenav-bg"></div>
+</ul>
+
+<div class="row">
+  <div class="col s11 offset-s1">
+    <div class="container container-custom">
+      <!-- Route Outlet -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

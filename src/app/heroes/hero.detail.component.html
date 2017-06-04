@@ -1,0 +1,80 @@
+<div *ngIf="hero">
+   <div class="hero-edit fixed-action-btn horizontal">
+                 <a *ngIf="file" class="btn-floating btn-large waves-effect waves-light red" (click)="clearImage();">
+                      <i class="fa fa-times"></i>
+                  </a>
+                 <a *ngIf="file" class="btn-floating btn-large waves-effect waves-light green" style="margin-right:1rem; float:right" (click)="addImage();">
+                      <i class="fa fa-save"></i>
+                  </a>
+
+                  <a *ngIf="!file" class="btn-floating btn-large blue" for="file-test">
+                    <i class="large fa fa-pencil"></i>
+                  </a>
+                  <ul *ngIf="!file">
+                    <li>
+                      <file-input [buttonClass]="'btn-floating yellow darken-4'" [iconClass]="'fa fa-user-circle'" [acceptVerbs]="'image/*'"
+                            [title]="'Update logo picture'" [file]="file" (preSelect)="isLogoChange=true;" (onError)="fileError($event)"
+                            (postSelect)="logoChange($event)" >
+                      </file-input>
+                    </li>
+                    <li>
+                      <file-input [buttonClass]="'btn-floating green'" [iconClass]="'fa fa-image'" [acceptVerbs]="'image/*'"
+                            [title]="'Update cover picture'" [file]="file" (preSelect)="isLogoChange=false;" (onError)="fileError($event)"
+                            (postSelect)="coverPicChange($event)" >
+                      </file-input>
+                    </li>
+                  </ul>
+                </div>
+
+	<div class="row">
+		<div class="col s12">
+			<div class="card hero">
+              <div class="card-image">
+                <img class="cover-pic" [src]="domsanitizer.bypassSecurityTrustUrl(hero.coverPicUrl | imageUrlCleanify)">
+                <div class="hero-profile" >
+                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                </div>
+                <div class="card-title">{{hero.name}}</div>
+              </div>
+              <form [formGroup]="heroForm" (ngSubmit)="submit()" >
+              <div class="card-content">
+                <div class="row">
+                	<div class="input-field col s12">
+	              		<input formControlName="name" id="hero-name" type="text" class="validate" >
+	          			<label for="hero-name" [class.active]="hero.name">Name</label>
+              		</div>
+                </div>
+                <div class="row">
+                	<div class="input-field col s12">
+	              		<input formControlName="realName" id="hero-real-name" type="text" class="validate" >
+	          			<label for="hero-real-name" [class.active]="hero.realName">Real Name</label>
+              		</div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    
+                   <select class="browser-default" formControlName="publisherId">
+                      <option value="" disabled>Choose publication</option>
+                      <!-- you can use ngValue to bind an object that would mean I have to bring publisher as an object into
+                      hero object instead of just the foreign key... so just using id  -->
+                      <option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</option>
+                    </select>
+                    <label class="active">Publication</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                        <textarea formControlName="about" id="hero-about" class="materialize-textarea"></textarea>
+                        <label for="hero-about" [class.active]="hero.about">About the hero</label>
+                    </div>
+                </div>
+              </div>
+              <div class="card-action">
+                <button type="submit" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+      			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
+              </div>
+            </form>
+            </div>
+		</div>
+	</div>
+</div>

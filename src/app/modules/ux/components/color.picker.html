@@ -1,0 +1,44 @@
+<div class="color-select" [id]="id ? id : 'color-picker'">
+                      <div class="tag-option" (click)="showColorPicker = !showColorPicker">
+                        <span *ngIf="!selectedColor">{{selectText}}</span>
+                        <div *ngIf="selectedColor" [ngClass]="'selected ' + selectedColor.color + ' ' + (selectedColor.colorShade == 1 ? 'lighten-' + selectedColor.colorShadeNum : selectedColor.colorShade == 2 ? 'darken-' + selectedColor.colorShadeNum : (selectedColor.colorShade == 5 || selectedColor.colorShade == 6) ? 'accent-' + selectedColor.colorShadeNum : '')"></div>
+                      </div>
+                      <div *ngIf="showColorPicker" class="card color-panel">
+                        <div class="card-action card-header">
+                            <div style="width:80%; float:left;"><h5>Color Picker</h5></div>
+                            <div style="width:20%; float:left;">
+                              <a class="waves-effect waves-light black btn btn-floating pull-right" (click)="showColorPicker = false"><i class="fa fa-times-circle"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                              <div class="col s12">
+                                  <ul class="color-dropdown-content active">
+                                    <li *ngFor="let color of colors" (click)="selectColor(color)"
+                                        [ngClass]="'col s2 ' + color.color + ' ' + (color.colorShade == 1 ? 'lighten-' + color.colorShadeNum : color.colorShade == 2 ? 'darken-' + color.colorShadeNum : (color.colorShade == 5 || color.colorShade == 6) ? 'accent-' + color.colorShadeNum : '')" >
+                                        <span [class.lightcolor]="color.colorShade == 2 || color.colorShade == 6" >{{color.color}} {{color.colorShade == 1 ? 'lighten-' + color.colorShadeNum : color.colorShade == 2 ? 'darken-' + color.colorShadeNum : (color.colorShade == 5 || color.colorShade == 6) ? 'accent-' + color.colorShadeNum : ''}}</span>
+                                    </li>
+                                </ul>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <div class="row">
+                              <div class="col s1">
+                                  <a *ngIf="currentPage != 1" class="waves-effect waves-light black btn btn-floating" (click)="gotoPrev()" ><i class="fa fa-arrow-circle-left"></i></a>
+                              </div>
+                              <div class="col s10">
+                                <ul class="color-dropdown-content active">
+                                    <li *ngFor="let color of primaryColors" (click)="selectColor(color)" [ngClass]="'col s2 ' + color.color" >
+                                        <span [class.lightcolor]="color.color == 'black'" >{{color.color}}</span>
+                                    </li>
+                                </ul>
+                              </div>
+                             <div class="col s1">
+                                  <a  *ngIf="currentPage != lastPage" class="waves-effect waves-light black btn btn-floating pull-right" (click)="gotoNext()"><i class="fa fa-arrow-circle-right"></i></a>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <label [for]="id ? id : 'color-picker'" class="active">{{labelText}}</label>

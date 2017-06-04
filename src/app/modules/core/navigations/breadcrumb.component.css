@@ -1,0 +1,89 @@
+/*
+    Credits to Chris Coyier
+    https://css-tricks.com/triangle-breadcrumbs/
+*/
+.breadcrumb { 
+  list-style: none; 
+  overflow: hidden; 
+  height: 62px;
+}
+
+.breadcrumb li { 
+  float: left; 
+  height: 62px;
+}
+
+.breadcrumb li a {
+  color: white !important;
+  text-decoration: none; 
+  padding: 0px 0 10px 45px;
+  background: #004d40; 
+  position: relative; 
+  display: block;
+  float: left;
+  height: 62px;
+}
+
+.breadcrumb li a i {
+    height: auto;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.breadcrumb li a::after { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid #004d40;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  left: 100%;
+  z-index: 2; 
+}
+
+.breadcrumb li a::before { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent;       
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid #009688;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1; 
+}
+
+.breadcrumb li:first-child a {
+  padding-left: 10px;
+}
+.breadcrumb li:nth-child(2) a       { background:        #00695c; }
+.breadcrumb li:nth-child(2) a:after { border-left-color: #00695c; }
+.breadcrumb li:nth-child(3) a       { background:        #00796b; }
+.breadcrumb li:nth-child(3) a:after { border-left-color: #00796b; }
+.breadcrumb li:nth-child(4) a       { background:        #00897b; }
+.breadcrumb li:nth-child(4) a:after { border-left-color: #00897b; }
+
+.breadcrumb li:last-child a {
+  background: transparent !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+}
+.breadcrumb li:last-child a::after { 
+  border: 0; 
+}
+
+.breadcrumb li a:hover { 
+  background: #00acc1; 
+}
+.breadcrumb li a:hover:after { 
+  border-left-color: #00acc1 !important; 
+}

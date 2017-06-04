@@ -1,0 +1,55 @@
+{
+  "rules": {
+    "publishers": {
+      "$publisher": {
+        ".validate": "newData.hasChildren(['name', 'description', 'imageUrl'])",
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "description": {
+          ".validate": "newData.isString()"
+        },
+        "imageUrl": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        "Heroes": {
+          "$hero": {
+            ".validate": "newData.hasChildren(['name', 'imageUrl', 'coverPicUrl'])",
+            "name": {
+              ".validate": "newData.isString()"
+            },
+            "imageUrl": {
+              ".validate": "newData.isString()"
+            },
+            "coverPicUrl": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          }
+        }
+      }
+    },
+    "Heroes": {
+      "$hero": {
+        ".validate": "newData.hasChildren(['name', 'imageUrl', 'coverPicUrl'])",
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "imageUrl": {
+          ".validate": "newData.isString()"
+        },
+        "coverPicUrl": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div class="navbar-fixed bread-crum">
+  <nav class="nav navbar">
+    <div class="nav-wrapper">
+      <div class="row">
+        <div class="col s11 offset-s1">
+          <ul class="breadcrumb">
+            <li *ngFor="let breadcrumb of breadcrumbs">
+              <a [routerLink]="breadcrumb.route">
+                <i [ngClass]="breadcrumb.iconClass"></i> {{breadcrumb.displayName}}
+              </a>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

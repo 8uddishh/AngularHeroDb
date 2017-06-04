@@ -1,0 +1,61 @@
+/* Login styles */
+.tab-login {
+    height: 60px;
+    background-color: #2196F3;
+}
+
+.tab-login .tab {
+    padding: 0px !important;
+    height: 60px;
+}
+
+.tab-login .tab a {
+    height: inherit;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-login .tab a:hover, a.active {
+    background-color: #2BBBAD;
+    border-bottom: 6px solid #02675d;
+}
+
+.btn-block {
+    width:100%;
+    text-align: center;
+}
+
+.facebook {
+    background-color: #3B5998;
+}
+
+.twitter {
+    background-color: #55ACEE;
+}
+
+.google {
+    background-color: #DD4B39;
+}
+
+.login-wrapper {
+    margin-top: 2rem;
+}
+
+.hero-login {
+    background-position: 0 -380px;
+    width: 320px;
+    height: 198px;
+    background-image: url(/images/sprites-artwork.92f042c.png);   
+}
+
+.input-field {
+    margin-top: 5px;
+}
+
+.input-field label {
+    height: 32px;
+}
+
+.registration .row:first-of-type {
+    margin-top: 40px;
+}

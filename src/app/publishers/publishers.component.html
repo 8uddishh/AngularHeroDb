@@ -1,0 +1,66 @@
+<div class="row heroes-content">
+    <div class="col s12">
+        <div class="card panel">
+            <div class="card-content">
+                <div class="card-title">
+                    <div class="card-title-legend fa fa-bank fa-2x" ></div>
+                    <div class="card-title-text">
+                        All Publishers
+                    </div>
+                    <div *ngIf="!canSave" class="card-title-action right">
+                       <a class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                    <!-- 
+                        Create publisher is done using NgForm 
+                        Documentation: https://angular.io/docs/ts/latest/guide/forms.html
+                     -->
+                    <form #heroForm="ngForm" (ngSubmit)="add()" class="hero-form" novalidate>
+                    <div class="card-title-action right">
+                        <button type="submit" *ngIf="canSave" [disabled]="!heroForm.form.valid" class="btn-floating btn-large waves-effect waves-light green dropdown-button">
+                            <i class="fa fa-save"></i>
+                        </button>
+                        <button type="button" *ngIf="canSave" class="btn-floating btn-large waves-effect waves-light red dropdown-button" (click)="clear();heroForm.reset();">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div *ngIf="canSave" class="row container-row scale-transition" [ngClass]="{'scale-out': !canSave }">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input [(ngModel)]="newPublisher.name" name="name" id="new-publisher-name" type="text" class="validate" 
+                                #name="ngModel" required>
+                            <label for="new-publisher-name">Publisher name</label>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <textarea [(ngModel)]="newPublisher.companyInfo" name="companyInfo" id="new-publisher-companyInfo" class="materialize-textarea validate" 
+                                #name="ngModel" required></textarea>
+                            <label for="new-publisher-companyInfo">Company Info</label>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                    <div class="row container-row">
+                        <div class="col s3 card-list" *ngFor="let publisher of publishers">
+                        <div class="card">
+                            <div class="card-image">
+                            <img [src]="publisher.coverPicUrl ? publisher.coverPicUrl : './images/image-not-found.png'">
+                            <span class="card-title">{{publisher.name}}</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(publisher); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
+                            </div>
+                            <div class="card-content">
+                            <div class="card-action">
+                                <button (click)="view(publisher)" class="waves-effect waves-light teal btn btn-block"><i class="fa fa-search"></i> View</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

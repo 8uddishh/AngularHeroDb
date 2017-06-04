@@ -1,0 +1,55 @@
+{
+    "Publishers": {
+        "Publisher1": {
+            "name": "Marvel",
+            "coverPicUrl": "",
+            "logoUrl": "",
+            "companyInfo": "Marvel Entertainment, LLC, a wholly-owned subsidiary of The Walt Disney Company, is one of the world's most prominent character-based entertainment companies, built on a proven library of over 8,000 characters featured in a variety of media over seventy years.  Marvel utilizes its character franchises in entertainment, licensing and publishing."
+        },
+        "Publisher2": {
+            "name": "DC",
+            "coverPicUrl": "",
+            "logoUrl": "",
+            "companyInfo": "DC Entertainment, home to iconic brands DC (Superman, Batman, Green Lantern, Wonder Woman, The Flash), Vertigo (Sandman, Fables) and MAD, is the creative division charged with strategically integrating its content across Warner Bros. Entertainment and Time Warner. DC Entertainment works in concert with many key Warner Bros. divisions to unleash its stories and characters across all media, including but not limited to film, television, consumer products, home entertainment and interactive games. Publishing thousands of comic books, graphic novels and magazines each year, DC Entertainment is one of the largest English-language publisher of comics in the world."
+        }
+    },
+
+    "Creators": {
+        "Creator1": {
+            "firstName": "Stan",
+            "lastName": "Lee",
+            "dateOfBirth": "",
+            "creatorInfo": "",
+            "coverPicUrl": "",
+            "logoUrl": ""
+        },
+        "Creator2": {
+            "firstName": "Bob",
+            "lastName": "Kane",
+            "dateOfBirth": "",
+            "creatorInfo": "",
+            "coverPicUrl": "",
+            "logoUrl": ""
+        }
+    },
+
+    "Heroes": {
+        "Hero1": {
+            "avatarName": "Spider-man",
+            "alterEgo": "Peter Parker",
+            "coverPicUrl": "",
+            "logoUrl": "",
+            "abitilties": "",
+            "heroInfo": ""
+        },
+
+        "Hero2": {
+            "avatarName": "Batman",
+            "alterEgo": "Bruce Wayne",
+            "coverPicUrl": "",
+            "logoUrl": "",
+            "abitilties": "",
+            "heroInfo": ""
+        }
+    }
+}

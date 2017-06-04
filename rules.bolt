@@ -1,0 +1,23 @@
+type Publisher {
+    name : String,
+    description: String,
+    imageUrl: String
+}
+
+type Hero {
+    name: String,
+    imageUrl: String,
+    coverPicUrl: String
+}
+
+path /publishers/{$publisher} is Publisher {
+
+}
+
+path /publishers/{$publisher}/Heroes/{$hero} is Hero {
+
+}
+
+path /Heroes/{$hero} is Hero {
+    
+}

@@ -1,0 +1,201 @@
+<div *ngIf="hero" class="row heroes-content">
+  <div class="col s12">
+          <div class="card panel">
+            <div class="card-content">
+              <div class="card-title">
+                <div class="card-title-legend fa fa-anchor fa-2x" ></div>
+                <div class="card-title-text">
+                  Background of {{hero.name}}
+                </div>
+                <div class="hero-profile" >
+                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row fix">
+                </div>
+                <div class="row">
+                  <ul>
+                    <li class="col s12" *ngFor="let story of stories;let i= index">
+                        <div class="row edit-story">
+                          <div class="col s9" *ngIf="!story.underEdit">
+                              <h5>{{story.title}}</h5>
+                          </div>
+                           <div class="input-field  col s9" *ngIf="story.underEdit">
+                              <input [id]="'story-title-' + story.id" type="text" class="validate" [(ngModel)]="story.title" >
+                              <label [for]="'story-title-' + story.id" [class.active]="story.title" >Title</label>
+                          </div>
+                          <div class="col s3">
+                              <button *ngIf="!story.underEdit" class="btn-floating btn-large waves-effect waves-light red pull-right" (click)="remove(story.id)">
+                                <i class="fa fa-times"></i>
+                              </button>
+                              <button *ngIf="!story.underEdit" class="btn-floating btn-large waves-effect waves-light blue pull-right" style="margin-right:10px;" (click)="story.underEdit = true">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                              <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light yellow darken-1 pull-right" (click)="story.underEdit = false" >
+                                <i class="fa fa-undo"></i>
+                              </button>
+                              <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light green pull-right" style="margin-right:10px;" (click)="save(story)">
+                                <i class="fa fa-save"></i>
+                              </button>
+                          </div>
+                        </div>
+                        <div class="row edit-story image" [class.topbottom]="story.templateType=='2'">
+                          <div class="image col" [class.s3]="story.templateType!='2'" [class.push-s9]="story.templateType=='1'" 
+                                [class.s12]="story.templateType=='2'"  style="position:relative;top:0;bottom:0;"
+                                [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (story.imageUrl | imageUrlCleanify) + '\')')"
+                                [style.background-position]="(story.coordinates.x) + 'px ' + (story.coordinates.y) + 'px'"
+                                (click)="ImageClick(story)">
+                            <file-input *ngIf="!story.file" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"
+                                [title]="'Update story picture'" [file]="file" (preSelect)="story.isImagechange=false;" (onError)="fileError($event)"
+                                (postSelect)="storyPicChange($event)" >
+                            </file-input>
+                            <a *ngIf="story.file" class="btn-floating btn waves-effect waves-light green" style="float:right" (click)="addImage(story);">
+                                  <i class="fa fa-save"></i>
+                              </a>
+                            <a *ngIf="story.file" class="btn-floating btn waves-effect waves-light red" style="margin-right:1rem; float:right" (click)="clearImage(story);">
+                                <i class="fa fa-times"></i>
+                            </a>
+                            
+                            <div class="bkgroundmove" *ngIf="story.underEdit">
+                                <div class="row">
+                                    <div class="col s4 offset-s4">
+                                      <button class="btn-floating btn-small waves-effect waves-light green" (mouseover)="movetopenter(story)" (mouseout)="movetopleave()">
+                                        <i class="fa fa-arrow-up"></i>
+                                      </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s4">
+                                      <button class="btn-floating btn-small waves-effect waves-light green" (mouseover)="moveleftenter(story)" (mouseout)="moveleftleave()">
+                                        <i class="fa fa-arrow-left"></i>
+                                      </button>
+                                    </div>
+                                    <div class="col s4">&nbsp;</div>
+                                    <div class="col s4">
+                                      <button class="btn-floating btn-small waves-effect waves-light green" (mouseover)="moverightenter(story)" (mouseout)="moverightleave()">
+                                        <i class="fa fa-arrow-right"></i>
+                                      </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s4 offset-s4">
+                                      <button class="btn-floating btn-small waves-effect waves-light green" (mouseover)="movebottomenter(story)" (mouseout)="movebottomleave()">
+                                        <i class="fa fa-arrow-down"></i>
+                                      </button>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col" [class.s9]="story.templateType!='2'" [class.pull-s3]="story.templateType=='1'" 
+                              [class.s12]="story.templateType=='2'" *ngIf="!story.underEdit">
+                              {{story.story}}
+                          </div>
+                          <div class="input-field col" [class.s9]="story.templateType!='2'" [class.pull-s3]="story.templateType=='1'" 
+                              [class.s12]="story.templateType=='2'" *ngIf="story.underEdit">
+                              <textarea [(ngModel)]="story.story" rows="8" [id]="'story-story-' + story.id" class="materialize-textarea validate" required></textarea>
+                            <label [for]="'story-story-' + story.id" [class.active]="story.story" >Story</label>
+                            </div>
+                        </div>
+                       <div class="divider"></div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-action">
+                <button class="btn" (click)="canAdd=true"><i class="fa fa-plus-circle"></i> New Story</button>
+              </div>
+          </div>
+        </div>
+
+      <form #storyForm="ngForm" (ngSubmit)="add()" class="background-form" novalidate>
+        <div *ngIf="canAdd" class="col s12 newStory">
+              <div class="modal bottom-sheet open">
+                <div class="modal-content">
+                  <div class="row">
+                      <div class="col s11 offset-s1">
+                          <h5><i class="fa fa-anchor"></i> New Story</h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col s11 offset-s1">
+                        <input [(ngModel)]="newStory.title" type="text" name="title" id="new-story-title" class="validate"
+                          #name="ngModel" required />
+                        <label for="new-story-title">Title</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col s11 offset-s1">
+                        <textarea [(ngModel)]="newStory.story" name="story" id="new-story-story" class="materialize-textarea validate"
+                          #story="ngModel" required></textarea>
+                        <label for="new-story-story">Story</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col s11 offset-s1">
+                        <label for="new-story-template" class="active">Select template</label>
+                        <div>
+                            <div class="row">
+                              <div class="col s4">
+                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template1" 
+                                 [(ngModel)]="newStory.templateType" [value]="0" #templateType="ngModel" />
+                                <label for="new-bkground-template1">Image on left</label>
+                              </div>
+                              <div class="col s4">
+                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template2" 
+                                  [(ngModel)]="newStory.templateType" [value]="1" #templateType="ngModel" />
+                                <label for="new-bkground-template2">Image on right</label>
+                              </div>
+                              <div class="col s4">
+                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template3"  
+                                  [(ngModel)]="newStory.templateType" [value]="2" #templateType="ngModel" />
+                                <label for="new-bkground-template3">Image on top</label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col s4">
+                                <div class="row template">
+                                    <div class="col s3 lefttemplate">&nbsp;
+                                    </div>
+                                    <div class="col s9 valign-wrapper center-align">Story text</div>
+                                </div>
+                              </div>
+                              <div class="col s4">
+                                <div class="row template">
+                                    <div class="col s9 valign-wrapper center-align">Story text</div>
+                                    <div class="col s3 righttemplate">
+                                      &nbsp;
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col s4">
+                                <div class="row template">
+                                    <div style="height:50px">
+                                        <div class="col s12 toptemplate">
+                                          &nbsp;
+                                        </div>
+                                    </div>
+                                    <div>
+                                      <div class="col s12 valign-wrapper center-align">Story text</div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!storyForm.form.valid" >
+                    <i class="fa fa-plus"></i> Add Story</button>
+                  <button class="modal-action modal-close waves-effect waves-light red btn" (click)="canAdd=false" >
+                    <i class="fa fa-times-circle"></i> Cancel</button>
+                </div>
+              </div>
+        </div>  
+        <div *ngIf="canAdd" class="modal-overlay"></div>
+        </form>
+</div>

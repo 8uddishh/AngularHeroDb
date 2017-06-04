@@ -1,0 +1,72 @@
+.template {
+    border: 1px solid #9e9e9e;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    width:90%;
+    height: 100px;
+}
+
+.template .col {
+    height:100%;
+}
+
+.newStory .bottom-sheet {
+   max-height: 80% !important;
+}
+
+.lefttemplate {
+    background-image:url(./images/thejoker.jpg);
+    background-position: 140px 0px;
+}
+
+.righttemplate {
+    background-image:url(./images/deadpool.jpg);
+    background-position: 140px 0px;
+}
+
+.toptemplate {
+    background-image:url(./images/harleyquinn.jpg);
+    background-position: 350px -40px;
+}
+
+.newStory .modal-footer {
+    border-top: 1px solid rgba(160,160,160,0.2);
+}
+
+.newStory .modal-footer button {
+    margin-right: 10px;
+}
+
+.edit-story textarea {
+  height:90%;
+}
+
+.edit-story.image {
+    display:flex;
+}
+
+.edit-story.image.topbottom {
+    display: block;
+}
+.edit-story.image.topbottom .image {
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.edit-story.image div {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.bkgroundmove {
+    width: 120px;
+}
+
+.bkgroundmove .row {
+    margin:15px;
+    height: 30px;
+}
+
+.divider {
+    margin-bottom: 15px;
+}

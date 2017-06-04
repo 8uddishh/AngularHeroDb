@@ -1,0 +1,17 @@
+<ul id="nav-mobile" class="side-nav sn-bg fixed ">
+  <li class="logo"><a id="logo-container" href="http://materializecss.com/" class="brand-logo"></a></li>
+  <li *ngFor="let menuItem of menuItems" [routerLinkActive]="'active'" 
+    [routerLinkActiveOptions]="menuItem.isBack ? {exact: true} : menuItem.level == minLevel? {exact: false} : {exact: true}" 
+    [ngClass]="menuItem.level == minLevel ? '' : 'next-level'">
+    <a *ngIf="menuItem.level == minLevel" [routerLink]="menuItem.route" class="waves-effect waves-teal" >
+      <ul>
+        <li class="center-align"><span [ngClass]="menuItem.iconClass"></span></li>
+        <li class="center-align menu-title">{{menuItem.displayName}}</li>
+      </ul>
+    </a>
+    <a *ngIf="menuItem.level != minLevel" [routerLink]="menuItem.route" class="waves-effect waves-teal" >
+      <span [ngClass]="menuItem.iconClass"></span> {{menuItem.displayName}}
+    </a>
+  </li>
+  <div class="sidenav-bg"></div>
+</ul>

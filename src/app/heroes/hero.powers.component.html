@@ -1,0 +1,67 @@
+<div *ngIf="hero" class="row heroes-content">
+  <div class="col s12">
+          <div class="card panel">
+            <div class="card-content">
+              
+              <div class="card-title">
+                <div class="card-title-legend fa fa-superpowers fa-2x" ></div>
+                <div class="card-title-text">
+                  Powers of {{hero.name}}
+                </div>
+                <div class="hero-profile" >
+                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row fix">
+                </div>
+                 <div class="row new-entity blue-grey lighten-5">
+                    <div class="input-field col s8 offset-s1">
+                      <i class="fa fa-superpowers prefix"></i>
+	              		  <input id="power-name" type="text" class="validate" [(ngModel)]="newPower.name" >
+	          			    <label for="power-name">Power</label>
+              		  </div>
+                  <div class="input-field  col s2">
+                   <a class="btn-floating btn-large waves-effect waves-light green" (click)="addPower()" >
+                            <i class="fa fa-plus"></i>
+                    </a>
+                  </div>
+                 </div>
+
+                 <div class="row" *ngFor="let power of powers">
+                      <div class="section power">
+                        <div class="row">
+                          <div class="input-field col s8 offset-s1" *ngIf="power.underEdit">
+                            <input type="text" class="validate" [(ngModel)]="power.name" >
+                          </div>
+                          <div class="col s8 offset-s1 name" *ngIf="!power.underEdit" 
+                            [ngClass]="power.new ? 'green-text text-darken-1': power.markForDelete ? 'red-text text-darken-1 strikethrough' : ''" >{{power.name}}</div>
+                          <div class="col s2" *ngIf="!(power.underEdit || power.markForDelete)">
+                            <a class="btn-floating btn-large waves-effect waves-light blue" *ngIf="!power.new" (click)="markForEdit(power)" >
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="btn-floating btn-large waves-effect waves-light red dropdown-button" 
+                                (click)="markForDelete(power)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                          </div>
+                          <div class="col s2" *ngIf="power.underEdit || power.markForDelete">
+                            <a class="btn-floating btn-large waves-effect waves-light yellow darken-1" 
+                                (click)="undo(power)" >
+                                <i class="fa fa-undo"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="divider"></div>
+                 </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <button (click)="save()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+      			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
+              </div>
+          </div>
+        </div>
+</div>

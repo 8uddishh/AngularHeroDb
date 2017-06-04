@@ -1,0 +1,263 @@
+
+.container {
+    position:relative;
+    top: -50px;
+    width: 100%;
+}
+
+.power {
+    padding: 0;
+}
+
+.container .row.fix {
+    height: 80px;
+}
+
+.new-entity {
+    padding-top:20px;
+}
+.new-entity .input-field  {
+    padding-bottom: 20px;
+}
+
+.power .name {
+    padding-top: 20px;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.card-action .container {
+    top: auto;
+}
+
+blockquote {
+    border-left: 6px solid #42a5f5;
+    min-height: 50px;
+    padding: 1.5rem;
+    cursor:pointer;
+    width:100%;
+}
+
+blockquote.canEdit {
+    padding: 0.9rem;
+}
+
+blockquote.canEdit textarea {
+    padding: 0.5rem;
+}
+
+blockquote.canEdit label {
+    top: -0.8rem;
+}
+
+blockquote.canEdit label.active {
+    top:-0.3rem;
+}
+
+blockquote .edit {
+    float:right;
+    position: relative;
+    top: -120px;
+}
+
+blockquote .delete {
+    float:right;
+    position: relative;
+    top: 0px;
+}
+
+blockquote button.cancel {
+    float:right;
+    right:-30px;
+}
+
+blockquote:not(.canEdit):hover {
+    border-right: 1px solid #42a5f5;
+    border-top: 1px solid #42a5f5;
+    border-bottom: 1px solid #42a5f5;
+}
+
+blockquote.right {
+    border-left-width:0px;
+    border-right: 6px solid #42a5f5;
+}
+
+blockquote.right:not(.canEdit):hover {
+    border-left: 1px solid #42a5f5;
+    border-top: 1px solid #42a5f5;
+    border-bottom: 1px solid #42a5f5;
+    border-right: 6px solid #42a5f5;
+}
+
+blockquote.anger {
+    border-left: 6px solid #b71c1c;
+}
+
+blockquote.anger:not(.canEdit):hover {
+    border-right: 1px solid #b71c1c;
+    border-top: 1px solid #b71c1c;
+    border-bottom: 1px solid #b71c1c;
+}
+
+blockquote.right.anger {
+    border-left-width:0px;
+    border-right: 6px solid #b71c1c;
+}
+
+blockquote.right.anger:not(.canEdit):hover {
+    border-left: 1px solid #b71c1c;
+    border-top: 1px solid #b71c1c;
+    border-bottom: 1px solid #b71c1c;
+    border-right: 6px solid #b71c1c;
+}
+
+
+blockquote.satire {
+    border-left: 6px solid #004d40;
+}
+
+blockquote.satire:not(.canEdit):hover {
+    border-right: 1px solid #004d40;
+    border-top: 1px solid #004d40;
+    border-bottom: 1px solid #004d40;
+}
+
+blockquote.right.satire {
+    border-left-width:0px;
+    border-right: 6px solid #004d40;
+}
+
+blockquote.right.satire:not(.canEdit):hover {
+    border-left: 1px solid #004d40;
+    border-top: 1px solid #004d40;
+    border-bottom: 1px solid #004d40;
+    border-right: 6px solid #004d40;
+}
+
+blockquote.sad {
+    border-left: 6px solid #ff8f00;
+}
+
+blockquote.sad:not(.canEdit):hover {
+    border-right: 1px solid #ff8f00;
+    border-top: 1px solid #ff8f00;
+    border-bottom: 1px solid #ff8f00;
+}
+
+blockquote.right.sad {
+    border-left-width:0px;
+    border-right: 6px solid #ff8f00;
+}
+
+blockquote.right.sad:not(.canEdit):hover {
+    border-left: 1px solid #ff8f00;
+    border-top: 1px solid #ff8f00;
+    border-bottom: 1px solid #ff8f00;
+    border-right: 6px solid #ff8f00;
+}
+
+blockquote.disgust {
+    border-left: 6px solid #4e342e;
+}
+
+blockquote.disgust:not(.canEdit):hover {
+    border-right: 1px solid #4e342e;
+    border-top: 1px solid #4e342e;
+    border-bottom: 1px solid #4e342e;
+}
+
+blockquote.right.disgust {
+    border-left-width:0px;
+    border-right: 6px solid #4e342e;
+}
+
+blockquote.right.disgust:not(.canEdit):hover {
+    border-left: 1px solid #4e342e;
+    border-top: 1px solid #4e342e;
+    border-bottom: 1px solid #4e342e;
+    border-right: 6px solid #4e342e;
+}
+
+blockquote.joy {
+    border-left: 6px solid #1b5e20;
+}
+
+blockquote.joy:not(.canEdit):hover {
+    border-right: 1px solid #1b5e20;
+    border-top: 1px solid #1b5e20;
+    border-bottom: 1px solid #1b5e20;
+}
+
+blockquote.right.joy {
+    border-left-width:0px;
+    border-right: 6px solid #1b5e20;
+}
+
+blockquote.right.joy:not(.canEdit):hover {
+    border-left: 1px solid #1b5e20;
+    border-top: 1px solid #1b5e20;
+    border-bottom: 1px solid #1b5e20;
+    border-right: 6px solid #1b5e20;
+}
+
+blockquote .row {
+    width:100%;
+}
+
+blockquote .fixed-action-btn ul {
+    top:5px;
+    right:40px;
+}
+
+blockquote .fixed-action-btn button,
+blockquote .fixed-action-btn a {
+    background-color: #42a5f5;
+}
+
+blockquote .fixed-action-btn button.anger,
+blockquote .fixed-action-btn a.anger {
+    background-color: #b71c1c;
+}
+
+blockquote .fixed-action-btn button.satire,
+blockquote .fixed-action-btn a.satire {
+    background-color: #004d40;
+}
+
+blockquote .fixed-action-btn button.sad,
+blockquote .fixed-action-btn a.sad {
+    background-color: #ff8f00;
+}
+
+blockquote .fixed-action-btn button.disgust,
+blockquote .fixed-action-btn a.disgust {
+    background-color: #4e342e;
+}
+
+blockquote .fixed-action-btn button.joy,
+blockquote .fixed-action-btn a.joy {
+    background-color: #1b5e20;
+}
+
+.newQuote .modal-footer {
+    border-top: 1px solid rgba(160,160,160,0.2);
+}
+
+.newQuote .modal-footer button {
+    margin-right: 10px;
+}
+
+.bottom-sheet {
+    z-index: 80; 
+    display: block; 
+    opacity: 1; 
+    bottom: 0px;
+}
+
+.modal-overlay {
+    z-index: 79; 
+    display: block; 
+    opacity: 0.5;
+}

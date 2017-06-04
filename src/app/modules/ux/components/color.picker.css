@@ -1,0 +1,99 @@
+/* UL */
+.color-select {
+    height:45px;
+    border: 1px solid #9e9e9e;
+    font-size: 15px;
+    padding: 5px;
+    border-radius:5px;
+}
+
+.color-select .selected {
+    width: 100%;
+    height: 20px;
+}
+
+.color-select .tag-option {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.color-select .color-panel {
+    position: relative;
+    z-index: 75;
+}
+
+.color-select .color-dropdown-content {
+    opacity:0;
+    display:none;
+    width:100%;
+    margin: 0px;
+}
+
+.color-select .row {
+    margin-bottom: 0px;
+}
+
+
+.color-select .color-dropdown-content li {
+    float:left;
+    display:block;
+    clear:none;
+    height:30px;
+    cursor: pointer;
+}
+
+.color-select .color-dropdown-content li span {
+    font-size: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.color-select .color-dropdown-content li:hover,
+.color-select .color-dropdown-content li.active {
+    border-radius:5px;
+    border: 1px solid #ffffff;
+}
+
+.color-select .color-dropdown-content li:hover span,
+.color-select .color-dropdown-content li.active span {
+     color:#026890 !important;
+}
+
+.color-select .color-dropdown-content.active {
+    opacity:1;
+    display:block;
+}
+
+.color-select .color-dropdown-content div {
+    height: 20px; 
+    width:20px; 
+    float:left; 
+    border: 1px solid #9e9e9e;
+    border-radius:5px;
+    margin:15px;
+}
+
+.color-select  .card-content {
+  padding:0px;
+  margin:0px;
+  position: relative;
+  top: auto !important;
+}
+
+.color-select .card-action {
+    background-color: #bdbdbd;
+    opacity: 0.7;
+    height: 69px;
+}
+
+.color-select li span.lightcolor {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.color-select .btn-floating .fa {
+    font-size: 18px;
+}
+
+.color-select .card-header h5 {
+    margin-top: 5px;
+}

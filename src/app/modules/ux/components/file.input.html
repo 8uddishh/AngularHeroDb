@@ -1,0 +1,5 @@
+<label [class]="buttonClass" [title]="title">
+    <i [class]="iconClass"></i><input [style.display]="toggle" type="file" #fileInput (click)="displayToggler()" [accept]="acceptVerbs" (change)="onChange(fileInput.files[0])">
+</label>
+
+<!-- wierd issue with chrome not file is moving in label erratcally-->

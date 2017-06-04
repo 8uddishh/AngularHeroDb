@@ -1,0 +1,14 @@
+.fixed-action-btn {
+    position: relative;
+    bottom: auto !important;
+    top: 35px;
+    z-index: 25;
+}
+
+.fixed-action-btn a:first-child {
+    float: right;
+}
+
+.card {
+    top: -55px;
+}

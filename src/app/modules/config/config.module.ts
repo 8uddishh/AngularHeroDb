@@ -15,12 +15,12 @@ import { ConfigService } from './config.service';
 export class ConfigModule {
     static forRoot(): ModuleWithProviders {
       AppConfig.getInstance().initialize({
-                        apiKey: "",
-                        authDomain: "",
-                        databaseURL: "",
-                        projectId: "",
-                        storageBucket: "",
-                        messagingSenderId: ""
+                      apiKey: "AIzaSyBe9RK6rGH2aPdYpoKsGuAG-cXxveQ87iQ",
+                      authDomain: "angular4hero.firebaseapp.com",
+                      databaseURL: "https://angular4hero.firebaseio.com",
+                      projectId: "angular4hero",
+                      storageBucket: "angular4hero.appspot.com",
+                      messagingSenderId: "543290559488"
                     } as FireBaseConfig)
       return {
         ngModule: ConfigModule,

@@ -19,7 +19,7 @@ export class NavigationService {
         
         let availables = _.filter([BreadCrumbScope.home, BreadCrumbScope.heroes, BreadCrumbScope.publishers, 
             BreadCrumbScope.hero, BreadCrumbScope.publisher, BreadCrumbScope.heroBackground, 
-            BreadCrumbScope.heroQuotes, BreadCrumbScope.heroPowers ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
+            BreadCrumbScope.heroQuotes, BreadCrumbScope.heroPowers, BreadCrumbScope.publisherHeroes ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
         let breadcrumbs = _.map(availables, s => {
                 return _.cloneDeep(_.find(BreadCrumbItems, b => b.scope == s))
             });
@@ -48,8 +48,14 @@ export class NavigationService {
 
             if((avail.scope | BreadCrumbScope.publisher) == avail.scope) {
                 avail.route.push(params[0]);
-                avail.displayName = params[1];
+                if(avail.scope == BreadCrumbScope.publisher)
+                    avail.displayName = params[1];
             }
+
+            if(avail.scope == BreadCrumbScope.publisherHeroes)
+            {
+                avail.route.push('heroes');
+            }            
         });
 
         this.navigationAnnouncedSource.next(breadcrumbs);
@@ -76,6 +82,8 @@ export class NavigationService {
             menuItems[0].route.push('/publishers');
             menuItems[1].route.push(routes[0]);
             menuItems[1].displayName = routes[1];
+            menuItems[2].route.push(routes[0]);
+            menuItems[2].route.push('heroes');
         }
         this.menuChangeAnnouncedSource.next(menuItems);
     }

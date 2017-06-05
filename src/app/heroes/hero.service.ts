@@ -29,6 +29,16 @@ export class HeroService extends EntityFireBaseService<Hero> {
     protected get searchIndex (): (entity:Hero) => string {
         return (entity) => entity.name;
     }
+
+    public getPageForPublisher (publisherid:string):Observable<Hero[]> {
+        return Observable.fromPromise(this.ref.orderByChild('publisherId').equalTo(publisherid).once('value') as Promise<any>)
+                    .map(observable => {
+                        var x = _.transform(observable.val(), (result:any, value:any, key:string) => {
+                            result.push(this.snapShotMapper(key, value));
+                        }, []);
+                        return x as Hero[];
+                    });
+    }
     
     public changeImage(id: string, file:any, isLogo:boolean ): firebase.storage.UploadTask {
         var storageRef = this.firebaseService.FireStorage.ref(`${isLogo ? 'Logos': 'CoverPics'}/${id}`);

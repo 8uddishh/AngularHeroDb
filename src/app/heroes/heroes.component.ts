@@ -28,13 +28,16 @@ import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model'
 })
 export class HeroesComponent extends BaseComponent {
   public heroes: Hero[];
-  public newHero: Hero = { name: '', publisherId: '' } as Hero;
+  
   public canSave: boolean = false;
 
+  publisher:Publisher;
   publishers: Publisher[];
 
-  constructor(protected authService: AuthService, private heroService: HeroService, private publisherService: PublisherService,
-    private navigationService:NavigationService, private toastrService:ToastrService, private router:Router) {
+  public newHero: Hero = { name: '', publisherId: '' } as Hero;
+
+  constructor(protected authService: AuthService, protected heroService: HeroService, protected publisherService: PublisherService,
+    protected navigationService:NavigationService, protected toastrService:ToastrService, protected router:Router) {
     super(authService);
   }
 
@@ -77,22 +80,30 @@ export class HeroesComponent extends BaseComponent {
             });
     }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+    baseInit():void {
+      super.ngOnInit();
+    }
 
-    this.toastrService.showInfo('Loading heroes...');
-        this.heroService.getPage()
-            .subscribe( heroes => {
-                this.heroes = heroes;
-                this.toastrService.showSuccess('Heroes loaded successfully');
+    ngOnInit(): void {
+      this.baseInit();
+
+      this.toastrService.showInfo('Loading heroes...');
+          this.heroService.getPage()
+              .subscribe( heroes => {
+                  this.heroes = heroes;
+                  this.toastrService.showSuccess('Heroes loaded successfully');
+              });
+
+      this.publisherService.getPage()
+            .subscribe(publishers => {
+              this.publishers = publishers;
             });
+      
+      this.navigationService.navigationAnnounce(BreadCrumbScope.heroes);    
+      this.navigationService.menuChangeAnnounce(MenuScope.parent);
+    }
 
-    this.publisherService.getPage()
-          .subscribe(publishers => {
-            this.publishers = publishers;
-          });
-    
-    this.navigationService.navigationAnnounce(BreadCrumbScope.heroes);    
-    this.navigationService.menuChangeAnnounce(MenuScope.parent);
-  }
+    ngOnDestroy() {
+        super.ngOnDestroy();
+    }
 }

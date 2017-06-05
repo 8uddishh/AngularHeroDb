@@ -6,7 +6,7 @@
               <div class="card-title">
                 <div class="card-title-legend fa fa-users fa-2x" ></div>
                 <div class="card-title-text">
-                  All Heroes
+                  {{ publisher ? publisher.name + ' Heroes' : 'All Heroes' }}
                 </div>
 
                 <div *ngIf="!canSave" class="card-title-action right">
@@ -35,7 +35,7 @@
 
                         <div class="row">
                           <div class="input-field col s12">
-                          <select class="browser-default" [(ngModel)]="newHero.publisherId" name="publisherId"  #publisherId="ngModel" required>
+                          <select class="browser-default" [(ngModel)]="newHero.publisherId" name="publisherId" [disabled]="publisher"  #publisherId="ngModel" required>
                               <option value="">Choose publication</option>
                               <!-- you can use ngValue to bind an object that would mean I have to bring publisher as an object into
                               hero object instead of just the foreign key... so just using id  -->

@@ -16,6 +16,7 @@ import { DashboardComponent }  from './dashboard/dashboard.component';
 import { PublisherComponent } from './publishers/publisher.component';
 import { PublishersComponent } from './publishers/publishers.component';
 import { PublisherDetailComponent } from './publishers/publisher.detail.component';
+import { PublisherHeroesComponent } from './publishers/publisher.heroes.component';
 import { HeroComponent }  from './heroes/hero.component';
 import { HeroesComponent }  from './heroes/heroes.component';
 import { HeroDetailComponent } from './heroes/hero.detail.component';
@@ -52,7 +53,8 @@ import { HeroesSearchComponent }  from './heroes/heroes.query.component';
     HeroesSearchComponent,
     PublishersComponent,
     PublisherComponent,
-    PublisherDetailComponent
+    PublisherDetailComponent,
+    PublisherHeroesComponent
   ],
   providers: [
     

@@ -1,104 +1,59 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import { Color } from './../modules/ux/components/color';
 import { Publisher } from './publisher.model';
 import { AuthService } from './../modules/core/auth/auth.service';
-import { ToastrService } from './../modules/ux/toastr.service';
 import { PublisherService } from './publisher.service';
-import { NavigationService } from './../modules/core/navigations/navigation.service';
-
 import { BaseComponent } from './../modules/core/base/base.component';
-import { MenuScope } from './../modules/core/navigations/menu.model';
-import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
 
 @Component({
   selector: 'my-publisher',
   providers: [
     PublisherService
   ],
-  templateUrl: './publisher.component.html',
-    styleUrls: [ 
-      './publisher.component.css'
-    ]
+  templateUrl: './publisher.component.html'
 })
 export class PublisherComponent extends BaseComponent  {
   publisher: Publisher;
   file:any = null;
   isLogoChange:boolean = false;
 
-  constructor(protected authService: AuthService, private publisherService: PublisherService, private navigationService:NavigationService,
-    private toastrService:ToastrService, private route: ActivatedRoute, private location: Location, public domsanitizer: DomSanitizer) {
+  constructor(protected authService: AuthService, private publisherService: PublisherService, private router:Router,
+    private route: ActivatedRoute) {
       super(authService);
   }
 
   ngOnInit(): void {
-
-        super.ngOnInit();
-
         this.route.params.switchMap((params: Params) => this.publisherService.getSingle(params['id']))
             .subscribe(publisher => {
-              this.publisher = publisher;
+               this.publisher = publisher;
+                if(!this.publisher.colorCode) 
+                  this.publisher.colorCode = '';
+                if(!this.publisher.companyInfo) 
+                  this.publisher.companyInfo = '';
+                if(!this.publisher.coverPicUrl) 
+                  this.publisher.coverPicUrl = '';
+                if(!this.publisher.logoUrl) 
+                  this.publisher.logoUrl = '';
+                if(!this.publisher.name) 
+                  this.publisher.name = '';
 
-              this.navigationService.navigationAnnounce(BreadCrumbScope.publisher, this.publisher.id, this.publisher.name);
-              this.navigationService.menuChangeAnnounce(MenuScope.publisher, this.publisher.id, this.publisher.name);
+                this.publisherService.publisherChangeAnnounce(this.publisher);
             });
-
         
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  save(): void {
-      this.publisherService.stockSingle(this.publisher)
-          .then( response => {
-              this.file = null;
-              this.toastrService.showSuccess('Publisher saved successfully');
-          });
-  }
-
-  logoChange(file: any): void {
-    this.file = file;
-     this.publisher.logoUrl = URL.createObjectURL(this.file);
-  }
-
-  coverPicChange(file: any): void {
-     this.file = file;
-     this.publisher.coverPicUrl = URL.createObjectURL(this.file);
-  }
-
-  fileError(msg:string): void {
-
-  }
-
-  clearImage():void {
-    this.file = null;
-  }
-
-  selectColor(color:Color): void {
-      this.publisher.colorCode = color.colorCode;
-  }
-
-  addImage(): void {
-    this.toastrService.showInfo('changing image for publisher...');
-    var $task = this.publisherService.changeImage(this.publisher.id, this.file, this.isLogoChange);
-    
-    $task.on('state_changed', (snap:any) => {
-
-    }, (err)=> {
-      this.file = null;
-      this.toastrService.showError('Publisher image could not be updated');
-    }, () => {
-      if(this.isLogoChange)
-        this.publisher.logoUrl = $task.snapshot.downloadURL;
-      else 
-        this.publisher.coverPicUrl = $task.snapshot.downloadURL;
-      this.save();
-    });
+        this.router.events.forEach((event) => {
+            if(event instanceof NavigationEnd) {
+              // matching url tocheck if this is a child url then propagate hero
+              let matcher = (event as NavigationEnd).url.match(/Publishers[/][a-zA-z-0-9]*/i);
+              if(matcher && matcher.length > 0)
+              {
+                  if(this.publisher)
+                  this.publisherService.publisherChangeAnnounce(this.publisher);
+              }
+                
+            }
+        });
+        super.ngOnInit();
   }
 }

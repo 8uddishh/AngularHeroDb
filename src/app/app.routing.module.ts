@@ -2,8 +2,9 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent }  from './dashboard/dashboard.component';
-import { PublisherComponent } from './publishers/publisher.component';
 import { PublishersComponent } from './publishers/publishers.component';
+import { PublisherComponent } from './publishers/publisher.component';
+import { PublisherDetailComponent } from './publishers/publisher.detail.component';
 import { HeroesComponent }  from './heroes/heroes.component';
 import { HeroComponent }  from './heroes/hero.component';
 import { HeroDetailComponent } from './heroes/hero.detail.component';
@@ -43,29 +44,37 @@ const heroRoutes:any =   {
     ]
   };
 
-const routes: Routes = [
-  { 
-    path: '', 
-    redirectTo: '/dashboard', //1
-    pathMatch: 'full' 
-  },
-  { 
-    path: 'dashboard',  
-    component: DashboardComponent //1
-  },
-  { 
+const publisherRoutes:any = {
     path: 'publishers', 
     children: [
       { 
         path: '', 
-        component: PublishersComponent //2
+        component: PublishersComponent
       },
       { 
         path: ':id', 
-        component: PublisherComponent // 3
+        component: PublisherComponent,
+        children: [
+          { 
+            path: '', 
+            component: PublisherDetailComponent
+          }
+        ]
       }
     ]
+}
+
+const routes: Routes = [
+  { 
+    path: '', 
+    redirectTo: '/dashboard',
+    pathMatch: 'full' 
   },
+  { 
+    path: 'dashboard',  
+    component: DashboardComponent
+  },
+  publisherRoutes,
   heroRoutes
 ];
 @NgModule({

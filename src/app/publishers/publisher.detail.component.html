@@ -1,0 +1,65 @@
+<div *ngIf="publisher">
+        <div class="hero-edit fixed-action-btn horizontal">
+                 <a *ngIf="file" class="btn-floating btn-large waves-effect waves-light red" (click)="clearImage();">
+                      <i class="fa fa-times"></i>
+                  </a>
+                 <a *ngIf="file" class="btn-floating btn-large waves-effect waves-light green" style="margin-right:1rem; float:right" (click)="addImage();">
+                      <i class="fa fa-save"></i>
+                  </a>
+
+                  <a *ngIf="!file" class="btn-floating btn-large blue" for="file-test">
+                    <i class="large fa fa-pencil"></i>
+                  </a>
+                  <ul *ngIf="!file">
+                    <li>
+                      <file-input [buttonClass]="'btn-floating yellow darken-4'" [iconClass]="'fa fa-user-circle'" [acceptVerbs]="'image/*'"
+                            [title]="'Update logo picture'" [file]="file" (preSelect)="isLogoChange=true;" (onError)="fileError($event)"
+                            (postSelect)="logoChange($event)" >
+                      </file-input>
+                    </li>
+                    <li>
+                      <file-input [buttonClass]="'btn-floating green'" [iconClass]="'fa fa-image'" [acceptVerbs]="'image/*'"
+                            [title]="'Update cover picture'" [file]="file" (preSelect)="isLogoChange=false;" (onError)="fileError($event)"
+                            (postSelect)="coverPicChange($event)" >
+                      </file-input>
+                    </li>
+                  </ul>
+                </div>
+	<div class="row">
+		<div class="col s12">
+			<div class="card hero">
+              <div class="card-image">
+                <img class="cover-pic" [src]="domsanitizer.bypassSecurityTrustUrl(publisher.coverPicUrl | imageUrlCleanify)">
+                <div class="hero-profile" >
+                   <img [src]="domsanitizer.bypassSecurityTrustUrl(publisher.logoUrl | imageUrlCleanify)">
+                </div>
+                <div class="card-title">{{publisher.name}}</div>
+              </div>
+              <div class="card-content">
+                <div class="row">
+                	<div class="input-field col s12">
+	              		<input [(ngModel)]="publisher.name" id="publisher-name" type="text" class="validate" >
+	          			<label for="publisher-name" [class.active]="publisher.name">Name</label>
+              		</div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                        <textarea [(ngModel)]="publisher.companyInfo" id="publisher-companyInfo" class="materialize-textarea"></textarea>
+                        <label for="publisher-companyInfo" [class.active]="publisher.companyInfo">Company Info</label>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12" style="min-height:60px;max-height:60px;" >
+                    <color-picker [id]="'publisher-color'" [selectText]="'Choose Publisher Tag Color'" [selectedColorCode]="publisher.colorCode"
+                      [labelText]="'Publisher Tag Color'" (onSelect)="selectColor($event)"></color-picker>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action">
+                <button (click)="save()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+      			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
+              </div>
+            </div>
+		</div>
+	</div>
+</div>

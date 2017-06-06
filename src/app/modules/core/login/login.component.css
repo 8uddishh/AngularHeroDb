@@ -42,10 +42,10 @@
 }
 
 .hero-login {
-    background-position: 0 -380px;
+    background-position: 0 -15px;
     width: 320px;
     height: 198px;
-    background-image: url(/images/sprites-artwork.92f042c.png);   
+    background-image: url(/images/harley_quinn_nobg_sm.png);   
 }
 
 .input-field {

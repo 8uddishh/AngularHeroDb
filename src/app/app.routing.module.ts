@@ -12,6 +12,7 @@ import { HeroDetailComponent } from './heroes/hero.detail.component';
 import { HeroBackgroundComponent } from './heroes/hero.background.component';
 import { HeroPowersComponent } from './heroes/hero.powers.component';
 import { HeroQuotesComponent } from './heroes/hero.quotes.component';
+import { ComicsComponent } from './comics/comics.component';
 
 const heroRoutes:any =   { 
     path: 'heroes',
@@ -69,6 +70,16 @@ const publisherRoutes:any = {
     ]
 }
 
+const comicRoutes:any = {
+    path: 'comics', 
+    children: [
+      {
+        path: '',
+        component: ComicsComponent
+      }
+    ]
+}
+
 const routes: Routes = [
   { 
     path: '', 
@@ -80,7 +91,8 @@ const routes: Routes = [
     component: DashboardComponent
   },
   publisherRoutes,
-  heroRoutes
+  heroRoutes,
+  comicRoutes
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

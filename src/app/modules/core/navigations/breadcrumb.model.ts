@@ -4,13 +4,15 @@ export enum BreadCrumbScope {
    home = 1,
    heroes = 2,
    publishers = 4,
+   comics = 8,
    hero = home | heroes,
    publisher = home | publishers,
-   heroBackground = hero | 8,
-   heroPowers = hero | 16,
-   heroQuotes = hero | 32,
-   publisherHeroes = publisher | 8,
-   publisherComics = publisher | 16
+   comic = home | comics,
+   heroBackground = hero | 16,
+   heroPowers = hero | 32,
+   heroQuotes = hero | 64,
+   publisherHeroes = publisher | 16,
+   publisherComics = publisher | 32
 }
 
 export class BreadCrumbModel {
@@ -30,6 +32,7 @@ export const BreadCrumbItems:BreadCrumbModel[] = [
   { scope: BreadCrumbScope.home, displayName: 'Home', iconClass: 'fa fa-home', route: ['dashboard'] },
   { scope: BreadCrumbScope.heroes, displayName: 'Heroes', iconClass: 'fa fa-heartbeat', route: ['heroes'] },
   { scope: BreadCrumbScope.publishers, displayName: 'Publishers', iconClass: 'fa fa-bank', route: ['publishers'] },
+  { scope: BreadCrumbScope.comics, displayName: 'Comics', iconClass: 'fa fa-book', route: ['comics'] },
   { scope: BreadCrumbScope.hero, displayName: '', iconClass: 'fa fa-heartbeat', route: ['heroes'] },
   { scope: BreadCrumbScope.publisher, displayName: '', iconClass: 'fa fa-bank', route: ['publishers'] },
   { scope: BreadCrumbScope.heroBackground, displayName: 'Stories', iconClass: 'fa fa-anchor', route: ['heroes'] },

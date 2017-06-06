@@ -17,9 +17,10 @@ export class NavigationService {
 
     navigationAnnounce(scope:BreadCrumbScope, ...params:any[]) {
         
-        let availables = _.filter([BreadCrumbScope.home, BreadCrumbScope.heroes, BreadCrumbScope.publishers, 
-            BreadCrumbScope.hero, BreadCrumbScope.publisher, BreadCrumbScope.heroBackground, 
-            BreadCrumbScope.heroQuotes, BreadCrumbScope.heroPowers, BreadCrumbScope.publisherHeroes ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
+        let availables = _.filter([BreadCrumbScope.home, BreadCrumbScope.heroes, BreadCrumbScope.publishers, BreadCrumbScope.comics,
+            BreadCrumbScope.hero, BreadCrumbScope.publisher,  BreadCrumbScope.comic, 
+            BreadCrumbScope.heroBackground, BreadCrumbScope.heroQuotes, BreadCrumbScope.heroPowers, 
+            BreadCrumbScope.publisherHeroes ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
         let breadcrumbs = _.map(availables, s => {
                 return _.cloneDeep(_.find(BreadCrumbItems, b => b.scope == s))
             });

@@ -1,0 +1,11 @@
+<div class="multi-select" (click)="showPop = true">
+    <ul role="listbox">
+        <li *ngFor="let selected of selectedList">{{getText(selected)}}</li>
+    </ul>
+    <input type="text" [(ngModel)]="searchText" class="browser-default" />
+</div>
+<div class="multi-pop" *ngIf="showPop" >
+    <ul>
+        <li *ngFor="let option of options; let i = index" (click)="select(option, i)" [class.active]="selectedIndex[i]" >{{getText(option)}}</li>
+    </ul>
+</div>

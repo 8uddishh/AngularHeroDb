@@ -46,10 +46,8 @@
 
                         <div class="row">
                           <div class="input-field col s12">
-                          <select class="browser-default" [(ngModel)]="newComic.heroIds" name="heroIds" #heroIds="ngModel" multiple required>
-                              <option value="">Choose heroes</option>
-                              <option *ngFor="let hero of heroes" [value]="hero.id">{{hero.name}}</option>
-                            </select>
+                            <multi-select [(ngModel)]="newComic.heroIds" [options]="heroes" [textField]="'name'" 
+                               [valueField]="'id'" name="heroIds"></multi-select>
                             <label class="active">Hero</label>
                           </div>
                         </div>

@@ -33,11 +33,12 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     @Input() options: any[];
     @Input() textField:string;
     @Input() valueField:string;
-    @Output() ngModelChange = new EventEmitter<any[]>();
+    //@Output() ngModelChange = new EventEmitter<any[]>();
 
-    model: any[];
+    model: any[] = [];
     showPop: boolean = false;
-    onModelChange: Function = (md: any) => { };
+    onModelChange: Function = (md: any) => {
+     };
     onModelTouched: Function = () => { };
 
     searchText:string;
@@ -62,8 +63,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['options']) {
             this.filteredList$ = Observable.of<any[]>(this.options);
-        }
-            
+        }  
     }
 
     ngOnInit () {
@@ -90,6 +90,8 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
             this.selectedList = _.reject(this.selectedList, selected => selected[this.valueField] == option[this.valueField]);
             this.selectedIndex[index] = false;
         }   
+        this.model = _.map(this.selectedList, sel => sel[this.valueField]);
+        this.onModelChange(this.model);
         this.searchText = '';
         this.searchTerms.next(this.searchText); 
     }
@@ -101,10 +103,13 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     writeValue(value: any): void {
         if (value !== undefined && value !== null) {
             this.model = value;
-            this.selectedIndex = _.map(this.model, model => false);
+            console.log(value)
+            this.selectedIndex = _.map(this.options, option => false);
+            this.selectedList = _.filter(this.options, opt => _.some(this.model, m => m == opt[this.valueField]))
         } else {
-            this.model = [];
+            this.selectedList = [];
             this.selectedIndex = [];
+            this.model = [];
         }
     }
 

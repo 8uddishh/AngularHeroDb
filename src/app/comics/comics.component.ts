@@ -15,12 +15,14 @@ import { BaseComponent } from './../modules/core/base/base.component';
 import { NavigationService } from './../modules/core/navigations/navigation.service';
 import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
+import { ComicService } from './comic.service'
 
 @Component({
   selector: 'my-comics',
   providers: [
     HeroService,
-    PublisherService
+    PublisherService,
+    ComicService
   ],
   templateUrl: './comics.component.html',
     styleUrls: [ 
@@ -32,14 +34,16 @@ export class ComicsComponent extends BaseComponent {
   publishers: Publisher[];
   heroes: Hero[];
 
+  comics:Comic[] = [];
   canSave: boolean = false;
   publisher:Publisher;
   hero:Hero;
 
   public newComic: Comic = { name: '', thumbnailUrl: '', publisherId: '', heroIds: [], synopsis:'' } as Comic;
 
-  constructor(protected authService: AuthService, protected heroService: HeroService, protected publisherService: PublisherService,
-    protected navigationService:NavigationService, protected toastrService:ToastrService, protected router:Router) {
+  constructor(protected authService: AuthService, protected comicService:ComicService, protected heroService: HeroService, 
+    protected publisherService: PublisherService, protected navigationService:NavigationService, protected toastrService:ToastrService, 
+    protected router:Router) {
     super(authService);
   }
 
@@ -48,21 +52,27 @@ export class ComicsComponent extends BaseComponent {
   }
 
   add(): void {
-      /*this.toastrService.showInfo('Creating new hero...');
-        this.heroService.spawnSingle(this.newHero)
-            .then(hero => {
-                return this.heroService.mapPublisher(hero);
-            }).then((hero:Hero) => {
-                this.heroes.push(hero);
-                this.clear();
-                this.toastrService.showSuccess('Hero created successfully');
-            });*/
+    this.toastrService.showInfo('Creating new comic...');
+    let toAdd = _.cloneDeep(this.newComic);
+    this.comicService.spawnComic(this.newComic)
+      .then(comicId => {
+        toAdd.id = comicId;
+        return this.comicService.mapHeroes(toAdd, []);
+      }).then(comic => {
+        return this.comicService.mapPublisher(toAdd);
+      }).then(comic => {
+        this.comics.push(toAdd);
+        this.clear();
+        this.toastrService.showSuccess('Comic created successfully');
+      });
   }
 
   clear(): void {
-/*        this.newHero.name = '';
-        this.newHero.publisherId = '';
-        this.canSave = false;*/
+        this.newComic.name = '';
+        this.newComic.publisherId = '';
+        this.newComic.heroIds = [];
+        this.newComic.synopsis = '';
+        this.canSave = false;
     }
 
   delete(hero:Hero): void {

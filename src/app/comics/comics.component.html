@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="row">
-                          <div class="input-field col s12">
+                          <div class="input-field col s12 publisherId">
                           <select class="browser-default" [(ngModel)]="newComic.publisherId" name="publisherId"
                             (change)="publisherChange(newComic.publisherId)" #publisherId="ngModel" required>
                               <option value="">Choose publication</option>
@@ -49,6 +49,14 @@
                             <multi-select [(ngModel)]="newComic.heroIds" [options]="heroes" [textField]="'name'" 
                                [valueField]="'id'" name="heroIds"></multi-select>
                             <label class="active">Hero</label>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                              <textarea [(ngModel)]="newComic.synopsis" name="synopsis" class="materialize-textarea validate" 
+                                  #synopsis="ngModel" required></textarea>
+                              <label for="new-publisher-companyInfo">Synopsis</label>
                           </div>
                         </div>
                     </div>

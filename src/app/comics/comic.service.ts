@@ -15,12 +15,32 @@ export class ComicService extends EntityFireBaseService<Comic> {
         super(firebaseService, "Comics", "Comic");
     }
 
+    protected get snapShotMapper (): (key:string, value:any) => Comic {
+        return (key, value) => {
+            let entity = {
+                id: key,
+                name: value.name,
+                publisherId: value.publisherId,
+                heroIds: _.map(_.filter(_.keys(value.heroIds), h => value.heroIds[h] == true ), h => h),
+                synopsis: value.synopsis,
+                thumbnailUrl: value.thumbnailUrl
+            } as Comic;
+            return entity;
+        };
+    }
+
     protected get searchIndex (): (entity:Comic) => string {
         return (entity) => entity.name;
     }
 
+    public changeImage(id: string, file:any): firebase.storage.UploadTask {
+        var storageRef = this.firebaseService.FireStorage.ref(`ComicThumbnails/${id}`);
+        return storageRef.put(file);
+    }
+
     public spawnComic(comic:Comic):firebase.Promise<string> {
         let keyRef = this.ref.push();
+        let key = `Comic${keyRef.key}`;
         let updateObject = {};
         let saveEntity:any = _.omit(comic, ['id', 'searchIndex', 'heroIds']);
         saveEntity.heroIds = {};
@@ -28,10 +48,23 @@ export class ComicService extends EntityFireBaseService<Comic> {
             saveEntity.heroIds[heroid] = true;
         });
         saveEntity['searchKey'] = this.searchIndex(comic).toLowerCase();
-        updateObject[`Comics/${keyRef.key}`] = saveEntity;
+        updateObject[`Comics/${key}`] = saveEntity;
 
         return this.db.ref().update(updateObject).then(response => {
-                    return keyRef.key;
+                    return key;
+                }).catch( err => this.handleError(err));
+    }
+
+    public stockComic(comic:Comic):firebase.Promise<string>  {
+        let updateObject = {};
+        let saveEntity:any = _.omit(comic, ['id', 'searchIndex', 'heroIds']);
+        saveEntity.heroIds = {};
+        _.each(comic.heroIds, heroid => {
+            saveEntity.heroIds[heroid] = true;
+        });
+        updateObject[`Comics/${comic.id}`] = saveEntity;
+        return this.db.ref().update(updateObject).then(response => {
+                    return comic.id;
                 }).catch( err => this.handleError(err));
     }
 

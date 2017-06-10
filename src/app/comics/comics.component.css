@@ -1,3 +1,26 @@
 .publisherId select {
     margin-bottom: 20px;
 }
+
+.modal-overlay {
+    z-index: 70; 
+    display: block; 
+    opacity: 0.5;
+}
+
+.above-overlay {
+    position:relative !important;
+    background-color: #fff;
+    z-index: 75;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.14);
+}
+
+.below-overlay {
+    position:relative;
+    z-index: 65;
+}
+
+.list-panel {
+    position: relative;
+    top: -100px;
+}

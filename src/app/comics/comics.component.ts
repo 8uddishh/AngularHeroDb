@@ -33,7 +33,6 @@ export class ComicsComponent extends BaseComponent {
   
   publishers: Publisher[];
   heroes: Hero[];
-
   comics:Comic[] = [];
   canSave: boolean = false;
   publisher:Publisher;
@@ -110,6 +109,11 @@ export class ComicsComponent extends BaseComponent {
               this.publishers = publishers;
             });
       
+      this.comicService.getPage()
+          .subscribe(comics => {
+            this.comics = comics;
+          });
+
       this.navigationService.navigationAnnounce(BreadCrumbScope.comics);    
       this.navigationService.menuChangeAnnounce(MenuScope.parent);
     }

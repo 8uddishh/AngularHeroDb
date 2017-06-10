@@ -25,6 +25,7 @@ import { HeroPowersComponent } from './heroes/hero.powers.component';
 import { HeroQuotesComponent } from './heroes/hero.quotes.component';
 import { HeroesSearchComponent }  from './heroes/heroes.query.component';
 import { ComicsComponent } from './comics/comics.component';
+import { ComicComponent } from './comics/comic.component';
 
 @NgModule({
   imports: [ 
@@ -56,7 +57,8 @@ import { ComicsComponent } from './comics/comics.component';
     PublisherComponent,
     PublisherDetailComponent,
     PublisherHeroesComponent,
-    ComicsComponent
+    ComicsComponent,
+    ComicComponent
   ],
   providers: [
     

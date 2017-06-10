@@ -89,7 +89,6 @@ export class EntityFireBaseService<T extends IModel> extends BaseService {
         return new Observable<T>((observer:Observer<T>) => {
             this.ref.orderByChild('searchKey')
                             .startAt(searchName).endAt(`${searchName}\\uf8ff`).on('child_added', snap => {
-                                console.log('child added');
                                 observer.next(this.snapShotMapper(snap.key, snap.val()));
                             });
         });

@@ -13,6 +13,7 @@ import { HeroBackgroundComponent } from './heroes/hero.background.component';
 import { HeroPowersComponent } from './heroes/hero.powers.component';
 import { HeroQuotesComponent } from './heroes/hero.quotes.component';
 import { ComicsComponent } from './comics/comics.component';
+import { ComicComponent } from './comics/comic.component';
 
 const heroRoutes:any =   { 
     path: 'heroes',
@@ -76,6 +77,10 @@ const comicRoutes:any = {
       {
         path: '',
         component: ComicsComponent
+      },
+      {
+        path: ':id',
+        component: ComicComponent
       }
     ]
 }

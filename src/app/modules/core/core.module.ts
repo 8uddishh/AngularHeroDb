@@ -7,6 +7,7 @@ import { AuthService } from './auth/auth.service';
 import { InMemoryDataService } from './memory/in.memory.data.service';
 import { LocalStorageService, SessionStorageService } from './storage/storage.service';
 import { TextBeautify } from './pipes/text-beautify';
+import { TextShortify } from './pipes/text-shortify';
 import { imageUrlCleanify } from './pipes/image-url-cleanify';
 import { QuoteBeautify } from './pipes/quote-beautify'
 import { LoginComponent } from './login/login.component';
@@ -20,9 +21,9 @@ import { NavigationService } from './navigations/navigation.service';
     RouterModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
-  declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, LoginComponent, BreadcrumbComponent, MenuComponent ],
+  declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, LoginComponent, BreadcrumbComponent, MenuComponent ],
   providers: [],
-  exports: [ TextBeautify, imageUrlCleanify, QuoteBeautify, LoginComponent, BreadcrumbComponent, MenuComponent ]
+  exports: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, LoginComponent, BreadcrumbComponent, MenuComponent ]
 })
 export class CoreModule {
     static forRoot(): ModuleWithProviders {

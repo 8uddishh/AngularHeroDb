@@ -1,6 +1,7 @@
+<div *ngIf="canSave" class="modal-overlay"></div>
 <div class="row heroes-content">
   <div class="col s12">
-          <div class="card panel">
+          <div class="card panel above-overlay">
             <div class="card-content">
               
               <div class="card-title">
@@ -62,23 +63,28 @@
                     </div>
                     </form>
               </div>
-
-<!--              <div class="row container-row">
-                <div class="col s3 card-list" *ngFor="let hero of heroes">
+            </div>
+          </div>
+        </div>
+        <div class="col s12 list-panel">
+          <div class="card panel">
+            <div class="card-content">
+            <div class="row container-row below-overlay">
+                <div class="col s3 card-list" *ngFor="let comic of comics">
                   <div class="card">
                     <div class="card-image">
-                      <img [src]="hero.coverPicUrl ? hero.coverPicUrl : './images/image-not-found.png'">
-                      <div class="card-title" [ngStyle]="getPublisherStyle(hero.publisherId)" >{{hero.name}}</div>
-                      <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(hero); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
+                      <img [src]="comic.thumbnailUrl ? comic.thumbnailUrl : './images/image-not-found.png'">
+                      <div class="card-title" [ngStyle]="getPublisherStyle(comic.publisherId)" >{{comic.name | textShortify}}</div>
+                      <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(comic); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
                     </div>
                     <div class="card-content">
                       <div class="card-action">
-                        <button (click)="view(hero)" class="waves-effect waves-light teal btn btn-block"><i class="fa fa-search"></i> View</button>
+                        <button (click)="view(comic)" class="waves-effect waves-light teal btn btn-block"><i class="fa fa-search"></i> View</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>

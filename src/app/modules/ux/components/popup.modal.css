@@ -1,0 +1,15 @@
+
+.modal {
+    z-index: 80; 
+    display: block; 
+    opacity: 1; 
+    transform: scaleX(1); 
+    top: 30%;
+}
+
+.modal-overlay {
+    z-index: 79; 
+    display: block; 
+    opacity: 0.5;
+}
+

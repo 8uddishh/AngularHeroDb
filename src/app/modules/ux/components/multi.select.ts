@@ -63,10 +63,11 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['options']) {
             this.filteredList$ = Observable.of<any[]>(this.options);
+            this.selectedList = _.filter(this.options, opt => _.some(this.model, m => m == opt[this.valueField]));
         }  
     }
 
-    ngOnInit () {
+    ngOnInit ():void {
         this.searchTerms
             .debounceTime(300)  
             .distinctUntilChanged() 
@@ -103,9 +104,9 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     writeValue(value: any): void {
         if (value !== undefined && value !== null) {
             this.model = value;
-            console.log(value)
             this.selectedIndex = _.map(this.options, option => false);
             this.selectedList = _.filter(this.options, opt => _.some(this.model, m => m == opt[this.valueField]))
+            console.log(this.selectedList)
         } else {
             this.selectedList = [];
             this.selectedIndex = [];

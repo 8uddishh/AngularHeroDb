@@ -12,7 +12,11 @@
           </div>
       </div>
       <div class="card-stacked">
-        <div class="card-title">{{comic.name}}</div>
+        <div class="card-title">{{comic.name}}  
+            <a *ngIf="tabscope == 'heroes'" class="btn-floating btn waves-effect waves-light cyan darken-4 pull-right" (click)="manageHeroes()">
+                      <i class="fa fa-heartbeat"></i>
+                  </a>
+        </div>
         <div class="card-content">
           <div class="row container-row" *ngIf="tabscope == 'detail'">
               <div class="row">
@@ -23,7 +27,7 @@
               </div>
               <div class="row">
                   <div class="input-field col s12">
-                   <select class="browser-default" [(ngModel)]="comic.publisherId" >
+                   <select class="browser-default" [(ngModel)]="comic.publisherId" (change)="publisherChange(comic.publisherId)" >
                       <option value="" disabled>Choose publication</option>
                       <option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</option>
                     </select>
@@ -37,8 +41,11 @@
                     </div>
             </div>
           </div>
-          <div class="row container-row heroes-content" *ngIf="tabscope == 'heroes'">
-            <a *ngFor="let hero of comicHeroes" [routerLink]="['/heroes', hero.id]"  class="col s6">
+
+
+          <div class="row container-row" *ngIf="tabscope == 'heroes'">
+            <a *ngFor="let hero of comicHeroes" [routerLink]="['/heroes', hero.id]"  class="col s6" 
+            [style.opacity]="originalPublisherId != comic.publisherId ? '0.7' : 'auto'" >
         				    <div class="row">
         				    	<div class="col s12">
                         <div class="hero-profile center-align">
@@ -52,22 +59,63 @@
         				    	</div>
         				    </div>
         				  </a>
+            </div>
+        </div>
+
+                <div class="card-action">
+                    <ul class="tabs pull-left">
+                        <li class="tab" [class.active]="tabscope == 'detail'">
+                            <a (click)="tabscope = 'detail'">Detail</a>
+                        </li>
+                        <li class="tab" [class.active]="tabscope == 'heroes'">
+                            <a (click)="showHeroes()">Heroes</a>
+                        </li>
+                    </ul>
+                    <button (click)="save()" class="modal-action modal-close waves-effect waves-light teal btn pull-right" type="button">
+                        <i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
         </div>
     </div>
 
-        <div class="card-action">
-            <ul class="tabs pull-left">
-                <li class="tab" [class.active]="tabscope == 'detail'">
-                    <a (click)="tabscope = 'detail'">Detail</a>
-                </li>
-                <li class="tab" [class.active]="tabscope == 'heroes'">
-                    <a (click)="showHeroes()">Heroes</a>
-                </li>
-            </ul>
+    <popup-modal *ngIf="confirmSave">
+    <popup-modal-content>
+        <h4>Tomare</h4>
+        <p>
+            You have changed the publisher, this makes your current hero selection invalid. 
+            Proceeding with save would delete the existing hero selection. Do you understand the consequences? 
+            Click 'Agree' to proceed, 'Disagree' to cancel this action.
+        </p>
+    </popup-modal-content>
+    <popup-modal-footer>
+        <a class="modal-action modal-close waves-effect waves-red btn-flat" (click)="disagreeSave()" >Disagree</a>
+        <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="agreenSave()" >Agree</a>
+    </popup-modal-footer>
+</popup-modal>
 
-          <button (click)="save()" class="modal-action modal-close waves-effect waves-light teal btn pull-right" type="button">
-                    <i class="fa fa-save"></i> Save</button>
+<bottomup-modal [show]="canManage"  *ngIf="comic">
+    <popup-modal-content>
+        <div class="row">
+            <div class="col s11 offset-s1">
+                <h5><i class="fa fa-heartbeat"></i> Manage Heroes</h5>
+            </div>
         </div>
-      </div>
+        <div class="row" *ngIf="comic.heroIds">
+            <div class="input-field col s11 offset-s1">
+                            <multi-select [(ngModel)]="comic.heroIds" [options]="heroes" [textField]="'name'" 
+                               [valueField]="'id'" name="heroIds"></multi-select>
+                            <label class="active">Hero</label>
+            </div>
+        </div>
+    </popup-modal-content>
+    <popup-modal-footer>
+        <button class="modal-action modal-close waves-effect waves-light teal btn" (click)="saveHeroes()">
+            <i class="fa fa-save"></i> Save</button>
+        <button class="modal-action modal-close waves-effect waves-light red btn" (click)="canManage=false" >
+            <i class="fa fa-times-circle"></i> Cancel</button>
+    </popup-modal-footer>
+</bottomup-modal>
+
 </div>
-</div>
+
+

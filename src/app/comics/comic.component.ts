@@ -37,6 +37,7 @@ export class ComicComponent extends BaseComponent  {
     heroesLoaded:boolean = false;
     tabscope:string = 'detail';
     publishers:Publisher[];
+    heroes:Hero[];
     comic:Comic;
     file:any;
     isthumbnailChange:boolean = false;
@@ -45,6 +46,8 @@ export class ComicComponent extends BaseComponent  {
 
     originalPublisherId: string;
     originalHeroIds: string[];
+    confirmSave:boolean = false;
+    canManage:boolean = false;
 
     constructor(protected authService: AuthService, private heroService: HeroService, private publisherService: PublisherService,
         private comicService:ComicService, private navigationService:NavigationService, private toastrService:ToastrService, 
@@ -57,15 +60,20 @@ export class ComicComponent extends BaseComponent  {
        this.comic.thumbnailUrl = URL.createObjectURL(this.file);
     }
 
-    showHeroes():void {
-      this.tabscope = 'heroes';
-      if(!this.heroesLoaded) {
-        _.each(this.comic.heroIds, heroId => {
+    loadHeroes(): void {
+      this.comicHeroes = [];
+      _.each(this.originalHeroIds, heroId => {
             this.heroService.getSingle(heroId)
               .subscribe(hero => {
                   this.comicHeroes.push(hero)
               });
         });
+    }
+
+    showHeroes():void {
+      this.tabscope = 'heroes';
+      if(!this.heroesLoaded) {
+        this.loadHeroes();
         this.heroesLoaded = true;
       }
     }
@@ -78,27 +86,74 @@ export class ComicComponent extends BaseComponent  {
         return this.comicService.mapPublisher(this.comic, this.originalPublisherId);
       }).then(comic => {
         this.toastrService.showSuccess('Comic saved successfully');
+        this.file = null;
+        if(this.originalPublisherId != this.comic.publisherId)
+        this.originalPublisherId = this.comic.publisherId;
+        if(this.originalHeroIds.length != this.comic.heroIds.length || 
+          _.every(this.originalHeroIds, h => _.some(this.comic.heroIds, c => c != h)))
+          {
+              this.originalHeroIds = _.cloneDeep(this.comic.heroIds);
+              console.log(this.originalHeroIds)
+              this.loadHeroes();
+          }
+        this.canManage = false;
       });
     }
 
-    save():void {
-      this.toastrService.showInfo('Saving comic...');
-      if(this.file) {
-         let $task = this.comicService.changeImage(this.comic.id, this.file);
-         $task.on('state_changed', (snap:any) => {
+    saveHeroes():void {
+      this.save(true);
+    }
 
-          }, (err)=> {
-            this.file = null;
-            this.toastrService.showError('Comic image could not be updated');
-          }, () => {
-              this.comic.thumbnailUrl = $task.snapshot.downloadURL;
-            this.persist();
-          });
+    publisherChange(id:string):void {
+        this.heroService.getPageForPublisher(id)
+            .subscribe(heroes => {
+              this.heroes = heroes;
+            });
+        if(id == this.originalPublisherId) {
+            this.comic.heroIds = _.cloneDeep(this.originalHeroIds);
+        }
+        else {
+          this.comic.heroIds = [];
+        }
+    }
+
+    agreenSave(): void {
+      this.comic.heroIds = [];
+      this.save(true);
+      this.confirmSave = false;
+    }
+
+    disagreeSave(): void {
+      this.confirmSave = false;
+    }
+
+    manageHeroes():void {
+      this.canManage = true;
+    }
+
+    save(force?:boolean):void {
+      
+      if(this.originalPublisherId != this.comic.publisherId && !force) {
+          this.confirmSave = true;
       }
       else {
-        this.persist()
+          this.toastrService.showInfo('Saving comic...');
+          if(this.file) {
+            let $task = this.comicService.changeImage(this.comic.id, this.file);
+            $task.on('state_changed', (snap:any) => {
+
+              }, (err)=> {
+                this.file = null;
+                this.toastrService.showError('Comic image could not be updated');
+              }, () => {
+                  this.comic.thumbnailUrl = $task.snapshot.downloadURL;
+                this.persist();
+              });
+          }
+          else {
+            this.persist()
+          }
       }
-      this.file = null;
     }
 
     ngOnInit(): void {
@@ -122,7 +177,8 @@ export class ComicComponent extends BaseComponent  {
                   });
                 this.originalPublisherId = this.comic.publisherId;
                 this.originalHeroIds = _.cloneDeep(this.comic.heroIds);
-                //this.publisherService.publisherChangeAnnounce(this.publisher);
+
+                this.publisherChange(this.comic.publisherId);
             });
 
         this.navigationService.navigationAnnounce(BreadCrumbScope.comics);    

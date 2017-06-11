@@ -2,6 +2,7 @@
     width: 40% !important;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    min-height: 600px;
 }
 
 .card-image img {

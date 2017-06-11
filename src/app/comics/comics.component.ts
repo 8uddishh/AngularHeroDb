@@ -102,10 +102,10 @@ export class ComicsComponent extends BaseComponent {
   }
 
     baseInit():void {
-      //super.ngOnInit();
+      super.ngOnInit();
     }
 
-    publisherChange(id:string):void {
+    publisherChanged(id:string):void {
         this.heroService.getPageForPublisher(id)
             .subscribe(heroes => {
               this.heroes = heroes;

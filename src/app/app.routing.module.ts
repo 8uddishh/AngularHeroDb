@@ -6,6 +6,7 @@ import { PublishersComponent } from './publishers/publishers.component';
 import { PublisherComponent } from './publishers/publisher.component';
 import { PublisherDetailComponent } from './publishers/publisher.detail.component';
 import { PublisherHeroesComponent } from './publishers/publisher.heroes.component';
+import { PublisherComicsComponent } from './publishers/publisher.comics.component';
 import { HeroesComponent }  from './heroes/heroes.component';
 import { HeroComponent }  from './heroes/hero.component';
 import { HeroDetailComponent } from './heroes/hero.detail.component';
@@ -65,6 +66,10 @@ const publisherRoutes:any = {
           {
             path: 'heroes',
             component: PublisherHeroesComponent
+          },
+          {
+            path: 'comics',
+            component: PublisherComicsComponent
           }
         ]
       }

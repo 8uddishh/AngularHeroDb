@@ -7,7 +7,7 @@
               <div class="card-title">
                 <div class="card-title-legend fa fa-book fa-2x" ></div>
                 <div class="card-title-text">
-                  All Comics
+                  {{ publisher ? publisher.name + ' Comics' : 'All Comics' }}
                 </div>
 
                 <div *ngIf="!canSave" class="card-title-action right">
@@ -37,7 +37,7 @@
                         <div class="row">
                           <div class="input-field col s12 publisherId">
                           <select class="browser-default" [(ngModel)]="newComic.publisherId" name="publisherId"
-                            (change)="publisherChange(newComic.publisherId)" #publisherId="ngModel" required>
+                            (change)="publisherChanged(newComic.publisherId)" [disabled]="publisher" #publisherId="ngModel" required>
                               <option value="">Choose publication</option>
                               <option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</option>
                             </select>

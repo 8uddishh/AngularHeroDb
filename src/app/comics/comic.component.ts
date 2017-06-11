@@ -179,9 +179,8 @@ export class ComicComponent extends BaseComponent  {
                 this.originalHeroIds = _.cloneDeep(this.comic.heroIds);
 
                 this.publisherChange(this.comic.publisherId);
-            });
-
-        this.navigationService.navigationAnnounce(BreadCrumbScope.comics);    
+                this.navigationService.navigationAnnounce(BreadCrumbScope.comic, this.comic.id, this.comic.name);
+            });  
         this.navigationService.menuChangeAnnounce(MenuScope.parent);
     }
 

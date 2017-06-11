@@ -20,7 +20,7 @@ export class NavigationService {
         let availables = _.filter([BreadCrumbScope.home, BreadCrumbScope.heroes, BreadCrumbScope.publishers, BreadCrumbScope.comics,
             BreadCrumbScope.hero, BreadCrumbScope.publisher,  BreadCrumbScope.comic, 
             BreadCrumbScope.heroBackground, BreadCrumbScope.heroQuotes, BreadCrumbScope.heroPowers, 
-            BreadCrumbScope.publisherHeroes ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
+            BreadCrumbScope.publisherHeroes, BreadCrumbScope.publisherComics ], s => s == BreadCrumbScope.home || ((s | scope) == scope && scope >= s));
         let breadcrumbs = _.map(availables, s => {
                 return _.cloneDeep(_.find(BreadCrumbItems, b => b.scope == s))
             });
@@ -56,7 +56,18 @@ export class NavigationService {
             if(avail.scope == BreadCrumbScope.publisherHeroes)
             {
                 avail.route.push('heroes');
-            }            
+            } 
+
+            if(avail.scope == BreadCrumbScope.publisherComics)
+            {
+                avail.route.push('comics');
+            }  
+
+            if((avail.scope | BreadCrumbScope.comic) == avail.scope) {
+                avail.route.push(params[0]);
+                if(avail.scope == BreadCrumbScope.comic)
+                    avail.displayName = params[1];
+            }          
         });
 
         this.navigationAnnouncedSource.next(breadcrumbs);
@@ -85,6 +96,8 @@ export class NavigationService {
             menuItems[1].displayName = routes[1];
             menuItems[2].route.push(routes[0]);
             menuItems[2].route.push('heroes');
+            menuItems[3].route.push(routes[0]);
+            menuItems[3].route.push('comics');
         }
         this.menuChangeAnnouncedSource.next(menuItems);
     }

@@ -35,6 +35,7 @@ export const BreadCrumbItems:BreadCrumbModel[] = [
   { scope: BreadCrumbScope.comics, displayName: 'Comics', iconClass: 'fa fa-book', route: ['comics'] },
   { scope: BreadCrumbScope.hero, displayName: '', iconClass: 'fa fa-heartbeat', route: ['heroes'] },
   { scope: BreadCrumbScope.publisher, displayName: '', iconClass: 'fa fa-bank', route: ['publishers'] },
+  { scope: BreadCrumbScope.comic, displayName: '', iconClass: 'fa fa-book', route: ['comics'] },
   { scope: BreadCrumbScope.heroBackground, displayName: 'Stories', iconClass: 'fa fa-anchor', route: ['heroes'] },
   { scope: BreadCrumbScope.heroPowers, displayName: 'Powers', iconClass: 'fa fa-superpowers', route: ['heroes'] },
   { scope: BreadCrumbScope.heroQuotes, displayName: 'Quotes', iconClass: 'fa fa-comments-o', route: ['heroes'] },

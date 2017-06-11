@@ -55,7 +55,6 @@ export class Dictionary<tKey,tValue> {
     }
 
     addRange(entries:KeyValuePair<tKey, tValue> []) {
-        console.log(entries);
         _.each(entries, entry => this.addEntry(entry));
     }
 

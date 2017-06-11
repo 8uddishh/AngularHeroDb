@@ -17,6 +17,7 @@ import { PublisherComponent } from './publishers/publisher.component';
 import { PublishersComponent } from './publishers/publishers.component';
 import { PublisherDetailComponent } from './publishers/publisher.detail.component';
 import { PublisherHeroesComponent } from './publishers/publisher.heroes.component';
+import { PublisherComicsComponent } from './publishers/publisher.comics.component';
 import { HeroComponent }  from './heroes/hero.component';
 import { HeroesComponent }  from './heroes/heroes.component';
 import { HeroDetailComponent } from './heroes/hero.detail.component';
@@ -57,6 +58,7 @@ import { ComicComponent } from './comics/comic.component';
     PublisherComponent,
     PublisherDetailComponent,
     PublisherHeroesComponent,
+    PublisherComicsComponent,
     ComicsComponent,
     ComicComponent
   ],

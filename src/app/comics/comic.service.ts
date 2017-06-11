@@ -123,4 +123,14 @@ export class ComicService extends EntityFireBaseService<Comic> {
                     return comic;
                 }).catch( err => this.handleError(err));
     } 
+
+    public getPageForPublisher (publisherid:string):Observable<Comic[]> {
+        return Observable.fromPromise(this.ref.orderByChild('publisherId').equalTo(publisherid).once('value') as Promise<any>)
+                    .map(observable => {
+                        var x = _.transform(observable.val(), (result:any, value:any, key:string) => {
+                            result.push(this.snapShotMapper(key, value));
+                        }, []);
+                        return x as Comic[];
+                    });
+    }
 }

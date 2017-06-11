@@ -17,6 +17,12 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+export class SelectItem {
+    constructor(public option:any, public selected:boolean) {
+
+    }
+}
+
 @Component({
   selector: 'multi-select',
   templateUrl: './multi.select.html',
@@ -35,7 +41,9 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     @Input() valueField:string;
     //@Output() ngModelChange = new EventEmitter<any[]>();
 
-    model: any[] = [];
+    optionItems:SelectItem[];
+
+    model: string[] = [];
     showPop: boolean = false;
     onModelChange: Function = (md: any) => {
      };
@@ -44,10 +52,10 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     searchText:string;
     selectedIndex:boolean[] = [];
 
-    filteredList$: Observable<any[]>;
+    filteredList$: Observable<SelectItem[]>;
     private searchTerms = new Subject<string>();
 
-    selectedList: any[] = [];
+    selectedList: SelectItem[] = [];
 
 
     title:string = "Default Value";
@@ -62,8 +70,13 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['options']) {
-            this.filteredList$ = Observable.of<any[]>(this.options);
-            this.selectedList = _.filter(this.options, opt => _.some(this.model, m => m == opt[this.valueField]));
+            this.optionItems = _.map(this.options, opt => new SelectItem(opt, false))
+            _.each(this.optionItems, opt => {
+                if(_.some(this.model, m => m == opt.option[this.valueField]))
+                    opt.selected = true;
+            });
+            this.filteredList$ = Observable.of<SelectItem[]>(this.optionItems);
+            this.selectedList = _.filter(this.optionItems, opt => opt.selected);
         }  
     }
 
@@ -73,8 +86,8 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
             .distinctUntilChanged() 
             .subscribe( term => {
                 this.filteredList$ = term ? 
-                Observable.of<any[]>(_.filter(this.options, opt => _.includes(opt[this.textField].toLowerCase(), term.toLowerCase()))) 
-                : Observable.of<any[]>(this.options)
+                Observable.of<SelectItem[]>(_.filter(this.optionItems, opt => _.includes(opt.option[this.textField].toLowerCase(), term.toLowerCase()))) 
+                : Observable.of<SelectItem[]>(this.optionItems)
             });
     }
 
@@ -82,34 +95,40 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
         this.searchTerms.next(term);
     }
 
-    select(option:any, index:number) {
-        if(_.every(this.selectedList, selected => selected[this.valueField] != option[this.valueField])) {
-            this.selectedList.push(option)
-            this.selectedIndex[index] = true;
-        }
-        else {
-            this.selectedList = _.reject(this.selectedList, selected => selected[this.valueField] == option[this.valueField]);
-            this.selectedIndex[index] = false;
-        }   
-        this.model = _.map(this.selectedList, sel => sel[this.valueField]);
+    remove(opt:SelectItem) {
+        opt.selected = false;
+        this.selectedList = _.reject(this.selectedList, selected => selected.option[this.valueField] == opt.option[this.valueField]);
+        this.model = _.map(this.selectedList, sel => sel.option[this.valueField]);
         this.onModelChange(this.model);
         this.searchText = '';
         this.searchTerms.next(this.searchText); 
     }
 
-    getText(option:any) {
-        return option[this.textField];
+    select(opt:SelectItem) {
+        if(_.every(this.selectedList, selected => selected.option[this.valueField] != opt.option[this.valueField])) {
+            opt.selected = true;
+            this.selectedList.push(opt);
+        }
+        else {
+            opt.selected = false;
+            this.selectedList = _.reject(this.selectedList, selected => selected.option[this.valueField] == opt.option[this.valueField]);
+        }   
+        this.model = _.map(this.selectedList, sel => sel.option[this.valueField]);
+        this.onModelChange(this.model);
+        this.searchText = '';
+        this.searchTerms.next(this.searchText); 
+    }
+
+    getText(opt:any) {
+        return opt.option[this.textField];
     }
 
     writeValue(value: any): void {
         if (value !== undefined && value !== null) {
             this.model = value;
-            this.selectedIndex = _.map(this.options, option => false);
-            this.selectedList = _.filter(this.options, opt => _.some(this.model, m => m == opt[this.valueField]))
-            console.log(this.selectedList)
+            this.selectedList = _.filter(this.optionItems, opt => _.some(this.model, m => m == opt.option[this.valueField]));
         } else {
             this.selectedList = [];
-            this.selectedIndex = [];
             this.model = [];
         }
     }

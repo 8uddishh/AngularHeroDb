@@ -11,7 +11,7 @@
                 </div>
 
                 <div *ngIf="!canSave" class="card-title-action right">
-                       <a class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
+                       <a *ngIf="userLoggedIn" class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -75,7 +75,7 @@
                     <div class="card-image">
                       <img [src]="comic.thumbnailUrl ? comic.thumbnailUrl : './images/image-not-found.png'">
                       <div class="card-title" [ngStyle]="getPublisherStyle(comic.publisherId)" >{{comic.name | textShortify}}</div>
-                      <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(comic); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
+                      <a *ngIf="userLoggedIn" class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(comic); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
                     </div>
                     <div class="card-content">
                       <div class="card-action">
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-
+        
         <popup-modal *ngIf="confirmDelete">
           <popup-modal-content>
               <h4>Tomare</h4>

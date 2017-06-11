@@ -27,10 +27,10 @@
                               <label [for]="'story-title-' + story.id" [class.active]="story.title" >Title</label>
                           </div>
                           <div class="col s3">
-                              <button *ngIf="!story.underEdit" class="btn-floating btn-large waves-effect waves-light red pull-right" (click)="remove(story.id)">
+                              <button *ngIf="!story.underEdit && userLoggedIn" class="btn-floating btn-large waves-effect waves-light red pull-right" (click)="remove(story.id)">
                                 <i class="fa fa-times"></i>
                               </button>
-                              <button *ngIf="!story.underEdit" class="btn-floating btn-large waves-effect waves-light blue pull-right" style="margin-right:10px;" (click)="story.underEdit = true">
+                              <button *ngIf="!story.underEdit && userLoggedIn" class="btn-floating btn-large waves-effect waves-light blue pull-right" style="margin-right:10px;" (click)="story.underEdit = true">
                                 <i class="fa fa-edit"></i>
                               </button>
                               <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light yellow darken-1 pull-right" (click)="story.underEdit = false" >
@@ -47,7 +47,7 @@
                                 [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (story.imageUrl | imageUrlCleanify) + '\')')"
                                 [style.background-position]="(story.coordinates.x) + 'px ' + (story.coordinates.y) + 'px'"
                                 (click)="ImageClick(story)">
-                            <file-input *ngIf="!story.file" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"
+                            <file-input *ngIf="!story.file && userLoggedIn" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"
                                 [title]="'Update story picture'" [file]="file" (preSelect)="story.isImagechange=false;" (onError)="fileError($event)"
                                 (postSelect)="storyPicChange($event)" >
                             </file-input>
@@ -105,7 +105,7 @@
               </div>
             </div>
 
-            <div class="card-action">
+            <div class="card-action" *ngIf="userLoggedIn">
                 <button class="btn" (click)="canAdd=true"><i class="fa fa-plus-circle"></i> New Story</button>
               </div>
           </div>

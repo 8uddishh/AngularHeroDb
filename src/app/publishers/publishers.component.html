@@ -8,7 +8,7 @@
                         All Publishers
                     </div>
                     <div *ngIf="!canSave" class="card-title-action right">
-                       <a class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
+                       <a *ngIf="userLoggedIn" class="btn-floating btn-large waves-effect waves-light green dropdown-button" (click)="canSave = true;">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -50,7 +50,7 @@
                             <div class="card-image">
                             <img [src]="publisher.coverPicUrl ? publisher.coverPicUrl : './images/image-not-found.png'">
                             <span class="card-title">{{publisher.name}}</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(publisher); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
+                            <a *ngIf="userLoggedIn" class="btn-floating halfway-fab waves-effect waves-light red" (click)="delete(publisher); $event.stopPropagation()"><i class="fa fa-trash"></i></a>
                             </div>
                             <div class="card-content">
                             <div class="card-action">

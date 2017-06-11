@@ -22,6 +22,9 @@ export class ColorPickerComponent {
     @Input()
     selectedColorCode:string;
 
+    @Input()
+    disabled:boolean;
+
     selectedColor:Color;
 
 
@@ -33,6 +36,7 @@ export class ColorPickerComponent {
     currentPage:number = 1;
     lastPage:number;
     showColorPicker:boolean;
+
 
     constructor() {
         

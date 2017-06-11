@@ -43,7 +43,7 @@ export class ComicComponent extends BaseComponent  {
     isthumbnailChange:boolean = false;
     comicHeroes: Hero[] = [];
 
-
+    publisherName:string;
     originalPublisherId: string;
     originalHeroIds: string[];
     confirmSave:boolean = false;
@@ -93,7 +93,6 @@ export class ComicComponent extends BaseComponent  {
           _.every(this.originalHeroIds, h => _.some(this.comic.heroIds, c => c != h)))
           {
               this.originalHeroIds = _.cloneDeep(this.comic.heroIds);
-              console.log(this.originalHeroIds)
               this.loadHeroes();
           }
         this.canManage = false;
@@ -174,6 +173,7 @@ export class ComicComponent extends BaseComponent  {
                 this.publisherService.getPage()
                   .subscribe(publishers => {
                     this.publishers = publishers;
+                    this.changePublisher();
                   });
                 this.originalPublisherId = this.comic.publisherId;
                 this.originalHeroIds = _.cloneDeep(this.comic.heroIds);
@@ -182,8 +182,18 @@ export class ComicComponent extends BaseComponent  {
                 this.navigationService.navigationAnnounce(BreadCrumbScope.comic, this.comic.id, this.comic.name);
             });  
         this.navigationService.menuChangeAnnounce(MenuScope.parent);
+
+        super.ngOnInit();
     }
 
-    ngOnDestroy() {
+    changePublisher() {
+      this.publisherName = _.find(this.publishers, p => p.id == this.comic.publisherId).name;
     }
+
+
+    ngOnDestroy() {
+      super.ngOnDestroy();
+    }
+
+
 }

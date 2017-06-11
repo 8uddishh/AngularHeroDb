@@ -31,6 +31,7 @@ export class HeroDetailComponent extends BaseComponent  {
     hero: Hero;
     file:any = null;
     isLogoChange:boolean = false;
+    publisherName:string;
 
     heroForm: FormGroup = new FormGroup({
         id: new FormControl(),
@@ -129,17 +130,23 @@ export class HeroDetailComponent extends BaseComponent  {
             this.heroForm.controls['about'].setValue(this.hero.about);
             this.heroForm.markAsPristine();
 
+            this.publisherService.getPage()
+              .subscribe(publishers => {
+                this.publishers = publishers;
+                this.changePublisher();
+              });
+
             this.navigationService.navigationAnnounce(BreadCrumbScope.hero, this.hero.id, this.hero.name);
             this.navigationService.menuChangeAnnounce(MenuScope.hero, this.hero.id, this.hero.name);
           }
           
       });
 
-      this.publisherService.getPage()
-          .subscribe(publishers => {
-            this.publishers = publishers;
-          });
       super.ngOnInit();
+    }
+
+    changePublisher() {
+      this.publisherName = _.find(this.publishers, p => p.id == this.hero.publisherId).name;
     }
 
     ngOnDestroy() {

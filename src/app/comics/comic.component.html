@@ -4,7 +4,7 @@
       <div class="card-image" [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (comic.thumbnailUrl | imageUrlCleanify) + '\')')">
           <div class="card-image-upload">
             <div>
-                <file-input *ngIf="!file" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"
+                <file-input *ngIf="userLoggedIn && !file" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"
                     [title]="'Update comic picture'" [file]="file" (preSelect)="isthumbnailChange=false;" (onError)="fileError($event)"
                     (postSelect)="comicPicChange($event)" >
             </file-input>
@@ -13,21 +13,23 @@
       </div>
       <div class="card-stacked">
         <div class="card-title">{{comic.name}}  
-            <a *ngIf="tabscope == 'heroes'" class="btn-floating btn waves-effect waves-light cyan darken-4 pull-right" (click)="manageHeroes()">
+            <a *ngIf="tabscope == 'heroes' && userLoggedIn" class="btn-floating btn waves-effect waves-light cyan darken-4 pull-right" (click)="manageHeroes()">
                       <i class="fa fa-heartbeat"></i>
                   </a>
         </div>
         <div class="card-content">
           <div class="row container-row" *ngIf="tabscope == 'detail'">
               <div class="row">
-                            <div class="input-field col s12">
-                            <input [(ngModel)]="comic.name" name="name" id="comic-name" type="text" class="validate">
+                        <div class="input-field col s12">
+                            <p *ngIf="!userLoggedIn">{{comic.name}}</p>
+                            <input *ngIf="userLoggedIn" [(ngModel)]="comic.name" name="name" id="comic-name" type="text" class="validate">
                             <label for="comic-name" [class.active]="comic.name" >Comic name</label>
                         </div>
               </div>
               <div class="row">
                   <div class="input-field col s12">
-                   <select class="browser-default" [(ngModel)]="comic.publisherId" (change)="publisherChange(comic.publisherId)" >
+                   <p *ngIf="!userLoggedIn">{{publisherName}}</p>
+                   <select *ngIf="userLoggedIn" class="browser-default" [(ngModel)]="comic.publisherId" (change)="publisherChange(comic.publisherId)" >
                       <option value="" disabled>Choose publication</option>
                       <option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</option>
                     </select>
@@ -36,7 +38,8 @@
             </div>
             <div class="row">
                   <div class="input-field col s12">
-                        <textarea [(ngModel)]="comic.synopsis" id="comic-synopsis" class="materialize-textarea"></textarea>
+                        <p *ngIf="!userLoggedIn">{{comic.synopsis}}</p>
+                        <textarea *ngIf="userLoggedIn" [(ngModel)]="comic.synopsis" id="comic-synopsis" class="materialize-textarea"></textarea>
                         <label for="comic-synopsis" [class.active]="comic.synopsis">Company Info</label>
                     </div>
             </div>
@@ -71,7 +74,7 @@
                             <a (click)="showHeroes()">Heroes</a>
                         </li>
                     </ul>
-                    <button (click)="save()" class="modal-action modal-close waves-effect waves-light teal btn pull-right" type="button">
+                    <button *ngIf="userLoggedIn" (click)="save()" class="modal-action modal-close waves-effect waves-light teal btn pull-right" type="button">
                         <i class="fa fa-save"></i> Save</button>
                 </div>
             </div>

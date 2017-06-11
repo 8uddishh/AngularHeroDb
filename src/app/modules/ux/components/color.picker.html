@@ -1,5 +1,5 @@
 <div class="color-select" [id]="id ? id : 'color-picker'">
-                      <div class="tag-option" (click)="showColorPicker = !showColorPicker">
+                      <div class="tag-option" (click)="disabled ? showColorPicker = false : showColorPicker = !showColorPicker">
                         <span *ngIf="!selectedColor">{{selectText}}</span>
                         <div *ngIf="selectedColor" [ngClass]="'selected ' + selectedColor.color + ' ' + (selectedColor.colorShade == 1 ? 'lighten-' + selectedColor.colorShadeNum : selectedColor.colorShade == 2 ? 'darken-' + selectedColor.colorShadeNum : (selectedColor.colorShade == 5 || selectedColor.colorShade == 6) ? 'accent-' + selectedColor.colorShadeNum : '')"></div>
                       </div>

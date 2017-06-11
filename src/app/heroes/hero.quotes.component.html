@@ -18,14 +18,14 @@
                 <div class="row">
                   <ul>
                     <li class="col s6" *ngFor="let quote of quotes;let i= index">
-                      <blockquote *ngIf="!quote.canEdit" (click)="quote.canEdit=true" class="valign-wrapper" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                      <blockquote *ngIf="!quote.canEdit || !userLoggedIn" (click)="quote.canEdit=true" class="valign-wrapper" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
                         [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
                           <div class="row">{{quote.name | quoteBeautify}}</div>
                           <div>
-                            <button (click)="delete(quote.id)" class="btn-floating btn-small waves-effect waves-light red delete"><i class="fa fa-times"></i></button>
+                            <button *ngIf="userLoggedIn" (click)="delete(quote.id)" class="btn-floating btn-small waves-effect waves-light red delete"><i class="fa fa-times"></i></button>
                           </div>
                         </blockquote>
-                        <blockquote *ngIf="quote.canEdit" class="valign-wrapper canEdit" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                        <blockquote *ngIf="quote.canEdit && userLoggedIn" class="valign-wrapper canEdit" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
                         [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
                           <div class="row">
                             <div class="input-field col s12">
@@ -60,7 +60,7 @@
               </div>
             </div>
 
-            <div class="card-action">
+            <div class="card-action" *ngIf="userLoggedIn">
                 <button class="btn" (click)="canAdd=true"><i class="fa fa-plus-circle"></i> New Quote</button>
               </div>
           </div>

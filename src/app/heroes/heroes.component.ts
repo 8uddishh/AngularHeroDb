@@ -58,7 +58,6 @@ export class HeroesComponent extends BaseComponent {
   }
 
   clear(): void {
-      console.log(this.newHero);
         this.newHero.name = '';
         this.newHero.publisherId = '';
         this.canSave = false;

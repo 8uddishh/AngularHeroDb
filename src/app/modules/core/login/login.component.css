@@ -29,12 +29,24 @@
     background-color: #3B5998;
 }
 
+.btn-large.facebook:focus, .btn-large.facebook:hover {
+    background-color: #4264aa !important;
+}
+
 .twitter {
     background-color: #55ACEE;
 }
 
+.btn-large.twitter:focus, .btn-large.twitter:hover {
+    background-color: #6cb7f0 !important;
+}
+
 .google {
     background-color: #DD4B39;
+}
+
+.btn-large.google:focus, .btn-large.google:hover {
+    background-color: #e15f4f !important;
 }
 
 .login-wrapper {

@@ -102,5 +102,25 @@ export class ComicService extends EntityFireBaseService<Comic> {
         return this.db.ref().update(updateObject).then(response => {
             return comic;
         }).catch( err => this.handleError(err));
-    }  
+    } 
+
+    public deletePublisherMap(comic:Comic):firebase.Promise<Comic>  {
+        let updateObject = {};
+        updateObject[`PublisherComics/${comic.publisherId}/${comic.id}`] = null;
+
+        return this.db.ref().update(updateObject).then(response => {
+                    return comic;
+                }).catch( err => this.handleError(err));
+    }
+
+    public deleteHeroesMap(comic:Comic):firebase.Promise<Comic>  {
+        let updateObject = {};
+        _.each(comic.heroIds, h => {
+            updateObject[`HeroesComics/${h}/${comic.id}`] = null;
+        });
+        
+        return this.db.ref().update(updateObject).then(response => {
+                    return comic;
+                }).catch( err => this.handleError(err));
+    } 
 }

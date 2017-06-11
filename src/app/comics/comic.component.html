@@ -1,4 +1,4 @@
-<div class="row heroes-content">
+<div class="row hero-content">
 <div class="col s12" *ngIf="comic">
     <div class="card horizontal">
       <div class="card-image" [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (comic.thumbnailUrl | imageUrlCleanify) + '\')')">
@@ -43,7 +43,7 @@
           </div>
 
 
-          <div class="row container-row" *ngIf="tabscope == 'heroes'">
+          <div class="row container-row  heroes-content" *ngIf="tabscope == 'heroes'">
             <a *ngFor="let hero of comicHeroes" [routerLink]="['/heroes', hero.id]"  class="col s6" 
             [style.opacity]="originalPublisherId != comic.publisherId ? '0.7' : 'auto'" >
         				    <div class="row">

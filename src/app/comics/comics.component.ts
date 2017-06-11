@@ -37,6 +37,8 @@ export class ComicsComponent extends BaseComponent {
   canSave: boolean = false;
   publisher:Publisher;
   hero:Hero;
+  confirmDelete:boolean = false;
+  todelete:Comic;
 
   public newComic: Comic = { name: '', thumbnailUrl: '', publisherId: '', heroIds: [], synopsis:'' } as Comic;
 
@@ -73,22 +75,31 @@ export class ComicsComponent extends BaseComponent {
         this.newComic.synopsis = '';
         this.canSave = false;
     }
+  
+  disagreeDelete():void {
+      this.todelete = null;
+      this.confirmDelete = false;
+  }
 
-  delete(hero:Hero): void {
-/*        this.toastrService.showInfo('Removing hero');
-        this.heroService.trashSingle(hero)
-            .then( response => {
-                if(hero.publisherId)
-                  return this.heroService.deletePublisherMap(hero);
-                else 
-                  new Promise<Hero>((resolve, reject) => {
-                    resolve(hero);
-                  });
-            }).then(response => {
-                this.heroes = this.heroes.filter( p => p.id != hero.id);
-                this.toastrService.showSuccess('Hero removed successfully');
-            });*/
-    }
+  agreenDelete():void {
+      this.toastrService.showInfo('Removing comic...');
+      this.comicService.trashSingle(this.todelete)
+          .then(response => {
+            return this.comicService.deletePublisherMap(this.todelete)
+          }).then(comic => {
+            return this.comicService.deleteHeroesMap(this.todelete)
+          }).then(comic => {
+            this.todelete = null;
+            this.confirmDelete = false;
+            this.comics = _.reject(this.comics, c => c.id == comic.id);
+            this.toastrService.showSuccess('Comic removed successfully');
+          });
+  }
+
+  delete(comic:Comic): void {
+    this.confirmDelete = true;
+    this.todelete = _.cloneDeep(comic);
+  }
 
     baseInit():void {
       //super.ngOnInit();

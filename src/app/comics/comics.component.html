@@ -88,4 +88,18 @@
             </div>
           </div>
         </div>
+
+        <popup-modal *ngIf="confirmDelete">
+          <popup-modal-content>
+              <h4>Tomare</h4>
+              <p>
+                  You are going to delete '{{todelete.name}}'. This action cannot be undone. 
+                  If you intend to continue click 'Delete' otherwise click 'Cancel'.
+              </p>
+          </popup-modal-content>
+          <popup-modal-footer>
+              <a class="modal-action modal-close waves-effect waves-red btn-flat" (click)="disagreeDelete()" >Cancel</a>
+              <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="agreenDelete()" >Delete</a>
+          </popup-modal-footer>
+      </popup-modal>
 </div>

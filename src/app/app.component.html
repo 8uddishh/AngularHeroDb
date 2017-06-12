@@ -22,7 +22,7 @@
               <a>
                 <div class="row">
                   <div class="col s3 user-box">
-                    <img [src]="user.photoUrl" class="responsive-img circle">
+                    <img *ngIf="user.photoUrl" [src]="user.photoUrl" class="responsive-img circle">
                   </div>
                   <div class="col s9">{{user.displayName | textBeautify}}</div>
                 </div>

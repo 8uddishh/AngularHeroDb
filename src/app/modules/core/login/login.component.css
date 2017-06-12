@@ -71,3 +71,7 @@
 .registration .row:first-of-type {
     margin-top: 40px;
 }
+
+input {
+    color: #fff;
+}

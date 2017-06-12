@@ -31,7 +31,11 @@ export class AppComponent extends BaseComponent {
 
     protected get postSignIn(): (firebaseUser:any) => void {
       return (usr) => {
-        this.user.displayName = usr.displayName;
+        if(usr.displayName)
+          this.user.displayName = usr.displayName;
+        else
+          this.user.displayName = usr.email;
+        if(usr.photoURL)
         this.user.photoUrl = usr.photoURL;
       };
     }

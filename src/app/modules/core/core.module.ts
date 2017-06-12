@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms'; 
 
 import { AuthService } from './auth/auth.service';
 import { InMemoryDataService } from './memory/in.memory.data.service';
@@ -19,6 +20,7 @@ import { NavigationService } from './navigations/navigation.service';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, LoginComponent, BreadcrumbComponent, MenuComponent ],

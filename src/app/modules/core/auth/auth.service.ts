@@ -32,6 +32,10 @@ export class AuthService {
         return this._auth.signInWithEmailAndPassword(email, pass);
     }
 
+    registerEmailandPassword(email:string, pass:string): firebase.Promise<any>  {
+        return this._auth.createUserWithEmailAndPassword(email, pass);
+    }
+
     signOut(): firebase.Promise<any> {
         return this._auth.signOut();
     }

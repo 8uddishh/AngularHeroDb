@@ -2,14 +2,14 @@
       <div class="hero-login"></div>
       <div class="col s12 nopad">
         <ul class="tab-login">
-          <li class="tab col s6"><a (click)="isSignIn = true;" [class.active]="isSignIn">Sign In</a></li>
-          <li class="tab col s6"><a (click)="isSignIn = false;" [class.active]="!isSignIn">Register</a></li>
+          <li class="tab col s6"><a (click)="tabChange('login')" [class.active]="isSignIn">Sign In</a></li>
+          <li class="tab col s6"><a (click)="tabChange('register')" [class.active]="!isSignIn">Register</a></li>
         </ul>
       </div>
       <div *ngIf="isSignIn" class="col s12 login-wrapper">
           <div class="row">
               <div class="col s4 center-align">
-                  <a class="btn-floating btn-large waves-effect waves-light facebook">
+                  <a class="btn-floating btn-large waves-effect waves-light facebook" (click)="signInWithFacebook()">
                     <i class="fa fa-facebook"></i>
                   </a>
               </div>
@@ -19,7 +19,7 @@
                   </a>
               </div>
               <div class="col s4 center-align">
-                  <a class="btn-floating btn-large waves-effect waves-light twitter">
+                  <a class="btn-floating btn-large waves-effect waves-light twitter" (click)="signInWithTwitter()">
                     <i class="fa fa-twitter"></i>
                   </a>
               </div>
@@ -29,44 +29,44 @@
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <input id="email_id" type="text" class="validate">
+                <input id="email_id" type="text" [(ngModel)]="email" class="validate">
                 <label for="email_id">Email address</label>
              </div>
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <input id="password" type="password" class="validate">
+                <input id="password" type="password" [(ngModel)]="pass" class="validate">
                 <label for="password">Password</label>
              </div>
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <button type="button" class="btn teal btn-lg btn-block waves-effect waves-light"><i class="fa fa-sign-in"></i> Sign In</button>
+                <button type="button" (click)="signInWithEmailPassword()" class="btn teal btn-lg btn-block waves-effect waves-light"><i class="fa fa-sign-in"></i> Sign In</button>
              </div>
           </div>
       </div>
       <div *ngIf="!isSignIn" class="col s12 registration">
           <div class="row">
               <div class="input-field col s12">
-                <input id="reg_email_id" type="text" class="validate">
+                <input id="reg_email_id" type="text" [(ngModel)]="registeremail" class="validate">
                 <label for="reg_email_id">Email address</label>
              </div>
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <input id="reg_password" type="password" class="validate">
+                <input id="reg_password" type="password" [(ngModel)]="registerpass" class="validate">
                 <label for="reg_password">Password</label>
              </div>
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <input id="reg_confirm_password" type="password" class="validate">
+                <input id="reg_confirm_password" type="password" [(ngModel)]="registerConfpass" class="validate">
                 <label for="reg_confirm_password">Confirm Password</label>
              </div>
           </div>
           <div class="row">
               <div class="input-field col s12">
-                <button type="button" class="btn teal btn-lg btn-block waves-effect waves-light"><i class="fa fa-sign-in"></i> Register</button>
+                <button type="button" (click)="registerEmailandPassword()"  class="btn teal btn-lg btn-block waves-effect waves-light"><i class="fa fa-sign-in"></i> Register</button>
              </div>
           </div>
       </div>

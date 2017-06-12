@@ -14,6 +14,8 @@ import { BaseComponent } from './../modules/core/base/base.component';
 import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
 import { Subscription } from 'rxjs';
+import { KeyValuePair, Dictionary  } from './../modules/core/datastructures/data.dictionary';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'my-publisher-detail',
@@ -30,6 +32,7 @@ export class PublisherDetailComponent extends BaseComponent  {
   file:any = null;
   isLogoChange:boolean = false;
   publisherChange:Subscription;
+  currentColor:string;
 
   constructor(protected authService: AuthService, private publisherService: PublisherService, private navigationService:NavigationService,
     private toastrService:ToastrService, private route: ActivatedRoute, private location: Location, public domsanitizer: DomSanitizer) {
@@ -45,6 +48,14 @@ export class PublisherDetailComponent extends BaseComponent  {
           .then( response => {
               this.file = null;
               this.toastrService.showSuccess('Publisher saved successfully');
+              if(this.currentColor != this.publisher.colorCode)
+                this.publisherService.getPage()
+                    .subscribe(publishers => {
+                      let colorDict = new Dictionary<string, string> ();
+                        colorDict.addRange(_.map(publishers, p => new KeyValuePair(p.id, p.colorCode)));
+                        this.publisherColors = colorDict;
+                    });
+                this.currentColor = this.publisher.colorCode;
           });
   }
 
@@ -92,8 +103,8 @@ export class PublisherDetailComponent extends BaseComponent  {
 
       this.publisherChange = this.publisherService.publisherhangeAnnounced$.subscribe(
         publisher => {
-          
           this.publisher = publisher;
+          this.currentColor = this.publisher.colorCode;
           this.navigationService.navigationAnnounce(BreadCrumbScope.publisher, this.publisher.id, this.publisher.name);
           this.navigationService.menuChangeAnnounce(MenuScope.publisher, this.publisher.id, this.publisher.name);
       });

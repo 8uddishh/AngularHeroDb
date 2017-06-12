@@ -30,6 +30,9 @@ export class HeroQuotesComponent extends BaseComponent  {
     quotes:any[];
     heroChange:Subscription;
 
+    confirmDelete:boolean;
+    todelete:string;
+
     constructor(protected authService: AuthService, private heroService: HeroService, private toastrService:ToastrService,
         private navigationService:NavigationService, public domsanitizer: DomSanitizer,  private location: Location) {
         super(authService);
@@ -76,13 +79,26 @@ export class HeroQuotesComponent extends BaseComponent  {
             })
     }
 
-    delete(id:string) {
+    disagreeDelete(): void {
+        this.confirmDelete = false;
+        this.todelete = null;
+    }
+
+    agreenDelete(): void {
         this.toastrService.showInfo('Deleting quote');
-        this.heroService.trashQuote(this.hero.id, id)
+        this.heroService.trashQuote(this.hero.id, this.todelete)
             .then(res => {
-                this.quotes = _.reject(this.quotes, quo => quo.id == id);
+                this.quotes = _.reject(this.quotes, quo => quo.id == this.todelete);
                 this.toastrService.showSuccess('Quote deleted successfully');
-            })
+                this.confirmDelete = false;
+                this.todelete = null;
+            });
+    }
+
+
+    delete(id:string) {
+        this.confirmDelete = true;
+        this.todelete = id;
     }
 
     ngOnInit(): void {

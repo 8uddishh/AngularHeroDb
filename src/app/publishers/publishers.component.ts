@@ -10,6 +10,7 @@ import { BaseComponent } from './../modules/core/base/base.component';
 import { NavigationService } from './../modules/core/navigations/navigation.service';
 import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'my-publishers',
@@ -23,6 +24,8 @@ export class PublishersComponent extends BaseComponent {
     public canSave: boolean = false;
 
     public publishers: Publisher[];
+    public todelete:Publisher;
+    confirmDelete:boolean = false;
 
     constructor(protected authService: AuthService, private publisherService:PublisherService, 
         private navigationService:NavigationService, private toastrService:ToastrService, private router:Router) {
@@ -46,13 +49,26 @@ export class PublishersComponent extends BaseComponent {
         this.canSave = false;
     }
 
-    delete(publisher:Publisher): void {
+    disagreeDelete(): void {
+        this.confirmDelete = false;
+        this.todelete = null;
+    }
+
+    agreenDelete(): void {
         this.toastrService.showInfo('Removing publisher');
-        this.publisherService.trashSingle(publisher)
+        
+        this.publisherService.trashSingle(this.todelete)
             .then( response => {
-                this.publishers = this.publishers.filter( p => p.id != publisher.id);
+                this.publishers = this.publishers.filter( p => p.id != this.todelete.id);
                 this.toastrService.showSuccess('Publisher removed successfully');
+                this.confirmDelete = false;
+                this.todelete = null;
             });
+    }
+
+    delete(publisher:Publisher): void {
+        this.todelete = _.cloneDeep(publisher);
+        this.confirmDelete = true;
     }
 
     view(publisher:Publisher): void {

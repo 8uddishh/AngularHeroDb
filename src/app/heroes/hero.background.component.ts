@@ -45,6 +45,9 @@ export class HeroBackgroundComponent extends BaseComponent  {
     bottom$ = Observable.interval(100);
     bottomSubscribe:Subscription;
 
+    public todelete:string;
+    confirmDelete:boolean = false;
+
     constructor(protected authService: AuthService, private heroService: HeroService, private toastrService:ToastrService,
         private navigationService:NavigationService, public domsanitizer: DomSanitizer, private location: Location) {
         super(authService);
@@ -112,13 +115,25 @@ export class HeroBackgroundComponent extends BaseComponent  {
         });
     }
 
-    remove(id:string) {
+    disagreeDelete(): void {
+        this.confirmDelete = false;
+        this.todelete = null;
+    }
+
+    agreenDelete(): void {
         this.toastrService.showInfo('Removing Story...');
-        this.heroService.trashStory(this.hero.id, id)
+        this.heroService.trashStory(this.hero.id, this.todelete)
             .then(resp => {
-                this.stories = _.reject(this.stories, s => s.id == id);
+                this.stories = _.reject(this.stories, s => s.id == this.todelete);
                 this.toastrService.showSuccess('Story removed successfully');
-            })
+                this.confirmDelete = false;
+                this.todelete = null;
+            });
+    }
+
+    remove(id:string) {
+        this.todelete = id;
+        this.confirmDelete = true;
     }
 
     moveleftenter(story:any):void {

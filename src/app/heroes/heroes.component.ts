@@ -35,6 +35,8 @@ export class HeroesComponent extends BaseComponent {
   publishers: Publisher[];
 
   public newHero: Hero = { name: '', publisherId: '' } as Hero;
+  todelete:Hero;
+  confirmDelete:boolean = false;
 
   constructor(protected authService: AuthService, protected heroService: HeroService, protected publisherService: PublisherService,
     protected navigationService:NavigationService, protected toastrService:ToastrService, protected router:Router) {
@@ -63,20 +65,32 @@ export class HeroesComponent extends BaseComponent {
         this.canSave = false;
     }
 
-  delete(hero:Hero): void {
+    disagreeDelete(): void {
+        this.confirmDelete = false;
+        this.todelete = null;
+    }
+
+    agreenDelete(): void {
         this.toastrService.showInfo('Removing hero');
-        this.heroService.trashSingle(hero)
+        this.heroService.trashSingle(this.todelete)
             .then( response => {
-                if(hero.publisherId)
-                  return this.heroService.deletePublisherMap(hero);
+                if(this.todelete.publisherId)
+                  return this.heroService.deletePublisherMap(this.todelete);
                 else 
                   new Promise<Hero>((resolve, reject) => {
-                    resolve(hero);
+                    resolve(this.todelete);
                   });
             }).then(response => {
-                this.heroes = this.heroes.filter( p => p.id != hero.id);
+                this.heroes = this.heroes.filter( p => p.id != this.todelete.id);
                 this.toastrService.showSuccess('Hero removed successfully');
+                this.confirmDelete = false;
+                this.todelete = null;
             });
+    }
+
+    delete(hero:Hero): void {
+        this.todelete = _.cloneDeep(hero);
+        this.confirmDelete = true;
     }
 
     baseInit():void {

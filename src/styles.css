@@ -556,3 +556,22 @@ body {
     top: auto !important;
 }
 
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert.alter {
+    top:40px;
+    position:relative
+}
+
+.alert .row{
+    margin-bottom: 0px;
+}
+
+.alert .row .text {
+    font-size: 20px;
+}

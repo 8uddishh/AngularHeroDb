@@ -47,7 +47,26 @@
                     </div>
                     </form>
               </div>
-
+              <div class="amber alert alter" *ngIf="(!heroes || heroes.length == 0) && userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no heroes available. Feel free to add some heroes by clicking the button above.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amber alert alter" *ngIf="(!heroes || heroes.length == 0) && !userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no heroes available.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
               <div class="row container-row">
                 <div class="col s3 card-list" *ngFor="let hero of heroes">
                   <div class="card">

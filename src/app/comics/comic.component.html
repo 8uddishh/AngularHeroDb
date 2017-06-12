@@ -47,6 +47,22 @@
 
 
           <div class="row container-row  heroes-content" *ngIf="tabscope == 'heroes'">
+            <div class="amber alert" *ngIf="(!comicHeroes || comicHeroes.length == 1) && userLoggedIn">
+                <div class="row">
+                    <div class="col s2"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                    <div class="col s10 text">
+                        There is no hero associated with this Comic. Feel free to add some heroes by clicking the button above.
+                    </div>
+                </div>
+            </div>
+            <div class="amber alert" *ngIf="(!comicHeroes || comicHeroes.length == 1) && !userLoggedIn">
+                <div class="row">
+                    <div class="col s2"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                    <div class="col s10 text">
+                        There is no hero associated with this Comic.
+                    </div>
+                </div>
+            </div>
             <a *ngFor="let hero of comicHeroes" [routerLink]="['/heroes', hero.id]"  class="col s6" 
             [style.opacity]="originalPublisherId != comic.publisherId ? '0.7' : 'auto'" >
         				    <div class="row">

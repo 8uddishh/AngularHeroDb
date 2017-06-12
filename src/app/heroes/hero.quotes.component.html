@@ -15,6 +15,27 @@
 
               <div class="container">
                 <div class="row fix"></div>
+                <div class="amber alert" *ngIf="(!quotes || quotes.length == 0) && userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no quotes available. Feel free to add some quotes by clicking the button below.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amber alert" *ngIf="(!quotes || quotes.length == 0) && !userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no quotes available.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 <div class="row">
                   <ul>
                     <li class="col s6" *ngFor="let quote of quotes;let i= index">

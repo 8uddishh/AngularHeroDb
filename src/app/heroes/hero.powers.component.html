@@ -28,7 +28,26 @@
                     </a>
                   </div>
                  </div>
-
+                 <div class="amber alert" *ngIf="(!powers || powers.length == 0) && userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no powers available. Feel free to add some powers by clicking the button above.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amber alert" *ngIf="(!powers || powers.length == 0) && !userLoggedIn">
+                        <div class="row">
+                            <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                            <div class="col s9 text">
+                                <p>
+                                    There is no powers available.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                  <div class="row" *ngFor="let power of powers">
                       <div class="section power">
                         <div class="row">

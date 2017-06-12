@@ -69,6 +69,26 @@
         <div class="col s12 list-panel">
           <div class="card panel">
             <div class="card-content">
+            <div class="amber alert alter" *ngIf="(!comics || comics.length == 0) && userLoggedIn">
+                <div class="row">
+                    <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                    <div class="col s9 text">
+                        <p>
+                          There is no comics available. Feel free to add some heroes by clicking the button above.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="amber alert alter" *ngIf="(!comics || comics.length == 0) && !userLoggedIn">
+                <div class="row">
+                    <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
+                    <div class="col s9 text">
+                        <p>
+                          There is no comics available.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="row container-row below-overlay">
                 <div class="col s3 card-list" *ngFor="let comic of comics">
                   <div class="card">

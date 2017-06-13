@@ -68,6 +68,13 @@ export class HeroBackgroundComponent extends BaseComponent  {
         this.selectedStory = story;
     }
 
+    cancelAdd():void {
+        this.canAdd = false;
+        this.newStory.templateType = TemplateType.leftimage;
+        this.newStory.title = '';
+        this.newStory.story = '';
+    }
+
     add():void {
         this.toastrService.showInfo('Adding new story');
         this.heroService.spawnStory(this.hero.id, this.newStory)

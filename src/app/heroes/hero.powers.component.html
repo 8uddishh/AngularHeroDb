@@ -23,9 +23,9 @@
 	          			    <label for="power-name">Power</label>
               		  </div>
                   <div class="input-field  col s2">
-                   <a class="btn-floating btn-large waves-effect waves-light green" (click)="addPower()" >
+                   <button class="btn-floating btn-large waves-effect waves-light green" [disabled]="!newPower.name" (click)="addPower()" >
                             <i class="fa fa-plus"></i>
-                    </a>
+                    </button>
                   </div>
                  </div>
                  <div class="amber alert" *ngIf="(!powers || powers.length == 0) && userLoggedIn">
@@ -66,10 +66,10 @@
                             </a>
                           </div>
                           <div class="col s2" *ngIf="power.underEdit || power.markForDelete">
-                            <a class="btn-floating btn-large waves-effect waves-light yellow darken-1" 
+                            <button class="btn-floating btn-large waves-effect waves-light yellow darken-1" 
                                 (click)="undo(power)" >
                                 <i class="fa fa-undo"></i>
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -78,8 +78,8 @@
                 </div>
             </div>
             <div class="card-action">
-                <button *ngIf="userLoggedIn" (click)="save()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
-      			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
+                <button *ngIf="userLoggedIn" (click)="save()" [disabled]="validate()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+      		    <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
               </div>
           </div>
         </div>

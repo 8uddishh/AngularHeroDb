@@ -76,7 +76,7 @@
                 </div>
               </div>
               <div class="card-action">
-                <button *ngIf="userLoggedIn" (click)="save()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+                <button *ngIf="userLoggedIn" (click)="save()" [disabled]="validate()" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
       			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
               </div>
             </div>

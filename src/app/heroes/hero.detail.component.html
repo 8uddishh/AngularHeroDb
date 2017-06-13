@@ -41,7 +41,7 @@
                 <div class="row">
                 	<div class="input-field col s12">
                     <p *ngIf="!userLoggedIn">{{hero.name}}</p>
-	              		<input *ngIf="userLoggedIn" formControlName="name" id="hero-name" type="text" class="validate" >
+	              		<input *ngIf="userLoggedIn" formControlName="name" id="hero-name" type="text" class="validate" required>
 	          			<label for="hero-name" [class.active]="hero.name">Name</label>
               		</div>
                 </div>
@@ -67,13 +67,13 @@
                 <div class="row">
                   <div class="input-field col s12">
                         <p *ngIf="!userLoggedIn">{{hero.about}}</p>
-                        <textarea *ngIf="userLoggedIn" formControlName="about" id="hero-about" class="materialize-textarea"></textarea>
+                        <textarea *ngIf="userLoggedIn" formControlName="about" id="hero-about" class="materialize-textarea" required></textarea>
                         <label for="hero-about" [class.active]="hero.about">About the hero</label>
                     </div>
                 </div>
               </div>
               <div class="card-action">
-                <button *ngIf="userLoggedIn" type="submit" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
+                <button *ngIf="userLoggedIn" [disabled]="!heroForm.valid" type="submit" class="waves-effect waves-light teal btn"><i class="fa fa-save"></i> Save</button>
       			     <button (click)="goBack()" class="waves-effect waves-light red btn"><i class="fa fa-arrow-circle-left"></i> Back</button>
               </div>
             </form>

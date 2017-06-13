@@ -34,6 +34,10 @@ export class HeroPowersComponent extends BaseComponent {
         super(authService);
     }
 
+    validate():boolean {
+        return !(this.powers.length > 0 && _.every(this.powers, p => p.name));
+    }
+
     goBack(): void {
         this.location.back();
     }

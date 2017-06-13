@@ -56,6 +56,12 @@ export class HeroQuotesComponent extends BaseComponent  {
         quote.canEdit = false;
     }
 
+    cancelAdd():void {
+        this.canAdd = false;
+        this.newQuote.emotion = QuoteEmotion.normal;
+        this.newQuote.name = '';  
+    }
+
     add():void {
         this.toastrService.showInfo('Adding new quote');
         this.heroService.spawnQuote(this.hero.id, this.newQuote)

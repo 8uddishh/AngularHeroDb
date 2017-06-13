@@ -284,6 +284,14 @@ body {
     background-color: black !important;
 }
 
+.white-skin  .btn.teal:disabled {
+    pointer-events: none;
+    background-color: rgba(37, 162, 150, 0.6) !important;
+    box-shadow: none;
+    color: #26a69a !important;
+    cursor: default
+}
+
 .white-skin  .btn-floating.green:disabled {
     pointer-events: none;
     background-color: rgba(37, 162, 150, 0.6) !important;

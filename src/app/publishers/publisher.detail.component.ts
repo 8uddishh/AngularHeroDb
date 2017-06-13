@@ -59,6 +59,10 @@ export class PublisherDetailComponent extends BaseComponent  {
           });
   }
 
+    validate():boolean {
+        return !(this.publisher.name != '' && this.publisher.companyInfo);
+    }
+
   logoChange(file: any): void {
     this.file = file;
      this.publisher.logoUrl = URL.createObjectURL(this.file);

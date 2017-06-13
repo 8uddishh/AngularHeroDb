@@ -8,7 +8,7 @@
                   Background of {{hero.name}}
                 </div>
                 <div class="hero-profile" >
-                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                   <img [src]="(hero.logoUrl | imageUrlCleanify) | sanitify: 'url'">
                 </div>
               </div>
 
@@ -64,7 +64,7 @@
                         <div class="row edit-story image" [class.topbottom]="story.templateType=='2'">
                           <div class="image col" [class.s3]="story.templateType!='2'" [class.push-s9]="story.templateType=='1'" 
                                 [class.s12]="story.templateType=='2'"  style="position:relative;top:0;bottom:0;"
-                                [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (story.imageUrl | imageUrlCleanify) + '\')')"
+                                [style.background-image] = "('url(\'' + (story.imageUrl | imageUrlCleanify) + '\')') | sanitify: 'style'"
                                 [style.background-position]="(story.coordinates.x) + 'px ' + (story.coordinates.y) + 'px'"
                                 (click)="ImageClick(story)">
                             <file-input *ngIf="!story.file && userLoggedIn" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"

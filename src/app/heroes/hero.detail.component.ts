@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/switchMap';
 import * as _ from 'lodash';
 import { Hero } from './hero.model';
@@ -44,7 +43,7 @@ export class HeroDetailComponent extends BaseComponent  {
   publishers: Publisher[];
 
     constructor(protected authService: AuthService, private heroService: HeroService, private publisherService: PublisherService,
-    private navigationService:NavigationService, private toastrService:ToastrService, public domsanitizer: DomSanitizer, 
+    private navigationService:NavigationService, private toastrService:ToastrService, 
     private route: ActivatedRoute, private location: Location) {
       super(authService);
     }

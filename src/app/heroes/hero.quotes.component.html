@@ -9,7 +9,7 @@
                   Quotes of {{hero.name}}
                 </div>
                 <div class="hero-profile" >
-                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                   <img [src]="(hero.logoUrl | imageUrlCleanify) | sanitify: 'url'">
                 </div>
               </div>
 

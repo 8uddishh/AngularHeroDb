@@ -1,7 +1,7 @@
 <div class="row hero-content">
 <div class="col s12" *ngIf="comic">
     <div class="card horizontal">
-      <div class="card-image" [style.background-image] = "domsanitizer.bypassSecurityTrustStyle('url(\'' + (comic.thumbnailUrl | imageUrlCleanify) + '\')')">
+      <div class="card-image" [style.background-image] = "('url(\'' + (comic.thumbnailUrl | imageUrlCleanify) + '\')')| sanitify: 'style'">
           <div class="card-image-upload">
             <div>
                 <file-input *ngIf="userLoggedIn && !file" [buttonClass]="'btn-floating blue pull-right'" [iconClass]="'fa fa-pencil'" [acceptVerbs]="'image/*'"

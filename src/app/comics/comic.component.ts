@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/switchMap';
 import * as _ from 'lodash';
 import { Comic } from './comic.model';
@@ -51,7 +50,7 @@ export class ComicComponent extends BaseComponent  {
 
     constructor(protected authService: AuthService, private heroService: HeroService, private publisherService: PublisherService,
         private comicService:ComicService, private navigationService:NavigationService, private toastrService:ToastrService, 
-        public domsanitizer: DomSanitizer, private route: ActivatedRoute, private location: Location) {
+        private route: ActivatedRoute, private location: Location) {
       super(authService);
     }
 

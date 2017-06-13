@@ -7,7 +7,6 @@ import { ToastrService } from './../modules/ux/toastr.service';
 import { NavigationService } from './../modules/core/navigations/navigation.service';
 import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
-import { DomSanitizer } from '@angular/platform-browser';
 import { HeroPower } from './hero.power.model';
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
@@ -30,7 +29,7 @@ export class HeroPowersComponent extends BaseComponent {
     powers:any[] = [];
 
     constructor(protected authService: AuthService, private heroService: HeroService, private toastrService:ToastrService,
-        private navigationService:NavigationService, public domsanitizer: DomSanitizer, private location: Location) {
+        private navigationService:NavigationService, private location: Location) {
         super(authService);
     }
 

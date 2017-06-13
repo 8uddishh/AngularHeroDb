@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subject }           from 'rxjs/Subject';
 
 import { BaseComponent } from './../modules/core/base/base.component';
@@ -49,7 +48,7 @@ export class HeroBackgroundComponent extends BaseComponent  {
     confirmDelete:boolean = false;
 
     constructor(protected authService: AuthService, private heroService: HeroService, private toastrService:ToastrService,
-        private navigationService:NavigationService, public domsanitizer: DomSanitizer, private location: Location) {
+        private navigationService:NavigationService, private location: Location) {
         super(authService);
     }
 

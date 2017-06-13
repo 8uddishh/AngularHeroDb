@@ -30,9 +30,9 @@
 		<div class="col s12">
 			<div class="card hero" [class.notop]="!userLoggedIn" >
               <div class="card-image">
-                <img class="cover-pic" [src]="domsanitizer.bypassSecurityTrustUrl(hero.coverPicUrl | imageUrlCleanify)">
+                <img class="cover-pic" [src]="(hero.coverPicUrl | imageUrlCleanify) | sanitify: 'url'">
                 <div class="hero-profile" >
-                   <img [src]="domsanitizer.bypassSecurityTrustUrl(hero.logoUrl | imageUrlCleanify)">
+                   <img [src]="(hero.logoUrl | imageUrlCleanify) | sanitify: 'url'">
                 </div>
                 <div class="card-title">{{hero.name}}</div>
               </div>

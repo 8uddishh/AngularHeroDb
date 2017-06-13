@@ -29,9 +29,9 @@
 		<div class="col s12">
 			<div class="card hero" [class.notop]="!userLoggedIn" >
               <div class="card-image">
-                <img class="cover-pic" [src]="domsanitizer.bypassSecurityTrustUrl(publisher.coverPicUrl | imageUrlCleanify)">
+                <img class="cover-pic" [src]="(publisher.coverPicUrl | imageUrlCleanify) | sanitify: 'url'">
                 <div class="hero-profile" >
-                   <img [src]="domsanitizer.bypassSecurityTrustUrl(publisher.logoUrl | imageUrlCleanify)">
+                   <img [src]="(publisher.logoUrl | imageUrlCleanify) | sanitify: 'url'">
                 </div>
                 <div class="card-title">{{publisher.name}}</div>
               </div>

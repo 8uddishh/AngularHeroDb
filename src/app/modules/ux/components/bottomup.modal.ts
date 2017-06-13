@@ -13,18 +13,26 @@ import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges,S
 })
 export class BottomupModalComponent implements OnInit, OnChanges {
 
+    @Input()
+    maxheight:string;
+
     @Input() 
     show:boolean;
 
     showModal:boolean;
+
+    constructor() {
+
+    }
 
     onFocusout(event:any) {
         this.show = false;
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['show']) 
+        if (changes['show']) {
             this.showModal = this.show;
+        }
     }
 
     ngOnInit ():void {

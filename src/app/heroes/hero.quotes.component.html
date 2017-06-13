@@ -87,11 +87,10 @@
           </div>
         </div>
 
-    <form #quoteForm="ngForm" (ngSubmit)="add()" class="quote-form" novalidate>
-        <div *ngIf="canAdd" class="col s12 newQuote">
-              <div class="modal bottom-sheet open">
-                <div class="modal-content">
-                  <div class="row">
+    <bottomup-modal [show]="canAdd" [maxheight]="'60%'" >
+        <form #quoteForm="ngForm" (ngSubmit)="add()" class="quote-form" novalidate>
+          <popup-modal-content>
+            <div class="row">
                       <div class="col s11 offset-s1">
                           <h5><i class="fa fa-comments-o"></i> New Quote</h5>
                       </div>
@@ -112,18 +111,15 @@
                             <label class="active">Emotion</label>
                           </div>
                         </div>
-                </div>
-                <div class="modal-footer">
-                  <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!quoteForm.form.valid" >
+          </popup-modal-content>
+          <popup-modal-footer>
+            <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!quoteForm.form.valid" >
                     <i class="fa fa-plus"></i> Add Quote</button>
                   <button class="modal-action modal-close waves-effect waves-light red btn" (click)="cancelAdd()" >
                     <i class="fa fa-times-circle"></i> Cancel</button>
-                </div>
-              </div>
-        </div>  
-
-        <div *ngIf="canAdd" class="modal-overlay"></div>
+          </popup-modal-footer>
         </form>
+    </bottomup-modal>
     <popup-modal *ngIf="confirmDelete">
           <popup-modal-content>
               <h4>Tomare</h4>

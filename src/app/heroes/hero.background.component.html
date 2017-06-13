@@ -130,94 +130,87 @@
               </div>
           </div>
         </div>
-
+    
+    <bottomup-modal [show]="canAdd" [maxheight]="'80%'" >
       <form #storyForm="ngForm" (ngSubmit)="add()" class="background-form" novalidate>
-        <div *ngIf="canAdd" class="col s12 newStory">
-              <div class="modal bottom-sheet open">
-                <div class="modal-content">
-                  <div class="row">
-                      <div class="col s11 offset-s1">
-                          <h5><i class="fa fa-anchor"></i> New Story</h5>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="input-field col s11 offset-s1">
-                        <input [(ngModel)]="newStory.title" type="text" name="title" id="new-story-title" class="validate"
+        <popup-modal-content>
+            <div class="row">
+              <div class="col s11 offset-s1">
+                <h5><i class="fa fa-anchor"></i> New Story</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s11 offset-s1">
+                <input [(ngModel)]="newStory.title" type="text" name="title" id="new-story-title" class="validate"
                           #name="ngModel" required />
-                        <label for="new-story-title">Title</label>
-                    </div>
-                  </div>
-                  <div class="row">
-                      <div class="input-field col s11 offset-s1">
-                        <textarea [(ngModel)]="newStory.story" name="story" id="new-story-story" class="materialize-textarea validate"
+                <label for="new-story-title">Title</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s11 offset-s1">
+                <textarea [(ngModel)]="newStory.story" name="story" id="new-story-story" class="materialize-textarea validate"
                           #story="ngModel" required></textarea>
-                        <label for="new-story-story">Story</label>
+                <label for="new-story-story">Story</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s11 offset-s1">
+                <label for="new-story-template" class="active">Select template</label>
+                <div>
+                  <div class="row">
+                    <div class="col s4">
+                      <input class="with-gap" name="templateType" type="radio" id="new-bkground-template1" 
+                          [(ngModel)]="newStory.templateType" [value]="0" #templateType="ngModel" />
+                      <label for="new-bkground-template1">Image on left</label>
+                    </div>
+                    <div class="col s4">
+                        <input class="with-gap" name="templateType" type="radio" id="new-bkground-template2" 
+                            [(ngModel)]="newStory.templateType" [value]="1" #templateType="ngModel" />
+                        <label for="new-bkground-template2">Image on right</label>
+                    </div>
+                    <div class="col s4">
+                        <input class="with-gap" name="templateType" type="radio" id="new-bkground-template3"  
+                            [(ngModel)]="newStory.templateType" [value]="2" #templateType="ngModel" />
+                        <label for="new-bkground-template3">Image on top</label>
                     </div>
                   </div>
                   <div class="row">
-                      <div class="input-field col s11 offset-s1">
-                        <label for="new-story-template" class="active">Select template</label>
-                        <div>
-                            <div class="row">
-                              <div class="col s4">
-                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template1" 
-                                 [(ngModel)]="newStory.templateType" [value]="0" #templateType="ngModel" />
-                                <label for="new-bkground-template1">Image on left</label>
-                              </div>
-                              <div class="col s4">
-                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template2" 
-                                  [(ngModel)]="newStory.templateType" [value]="1" #templateType="ngModel" />
-                                <label for="new-bkground-template2">Image on right</label>
-                              </div>
-                              <div class="col s4">
-                                <input class="with-gap" name="templateType" type="radio" id="new-bkground-template3"  
-                                  [(ngModel)]="newStory.templateType" [value]="2" #templateType="ngModel" />
-                                <label for="new-bkground-template3">Image on top</label>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col s4">
-                                <div class="row template">
-                                    <div class="col s3 lefttemplate">&nbsp;
-                                    </div>
-                                    <div class="col s9 valign-wrapper center-align">Story text</div>
-                                </div>
-                              </div>
-                              <div class="col s4">
-                                <div class="row template">
-                                    <div class="col s9 valign-wrapper center-align">Story text</div>
-                                    <div class="col s3 righttemplate">
-                                      &nbsp;
-                                    </div>
-                                </div>
-                              </div>
-                              <div class="col s4">
-                                <div class="row template">
-                                    <div style="height:50px">
-                                        <div class="col s12 toptemplate">
-                                          &nbsp;
-                                        </div>
-                                    </div>
-                                    <div>
-                                      <div class="col s12 valign-wrapper center-align">Story text</div>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
+                      <div class="col s4">
+                        <div class="row template">
+                            <div class="col s3 lefttemplate">&nbsp;</div>
+                            <div class="col s9 valign-wrapper center-align">Story text</div>
                         </div>
+                      </div>
+                      <div class="col s4">
+                        <div class="row template">
+                          <div class="col s9 valign-wrapper center-align">Story text</div>
+                            <div class="col s3 righttemplate">&nbsp;</div>
+                          </div>
+                        </div>
+                        <div class="col s4">
+                          <div class="row template">
+                            <div style="height:50px">
+                              <div class="col s12 toptemplate">&nbsp;</div>
+                            </div>
+                          <div>
+                          <div class="col s12 valign-wrapper center-align">Story text</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!storyForm.form.valid" >
-                    <i class="fa fa-plus"></i> Add Story</button>
-                  <button class="modal-action modal-close waves-effect waves-light red btn" (click)="cancelAdd()" >
-                    <i class="fa fa-times-circle"></i> Cancel</button>
                 </div>
               </div>
-        </div>  
-        <div *ngIf="canAdd" class="modal-overlay"></div>
-        </form>
+            </div>
+        </popup-modal-content>
+        <popup-modal-footer>
+            <button class="modal-action modal-close waves-effect waves-light teal btn" type="submit" [disabled]="!storyForm.form.valid" >
+                    <i class="fa fa-plus"></i> Add Story</button>
+            <button class="modal-action modal-close waves-effect waves-light red btn" (click)="cancelAdd()" >
+                    <i class="fa fa-times-circle"></i> Cancel</button>
+        </popup-modal-footer>
+      </form>
+    </bottomup-modal>
+
     <popup-modal *ngIf="confirmDelete">
           <popup-modal-content>
               <h4>Tomare</h4>

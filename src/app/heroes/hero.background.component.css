@@ -10,10 +10,6 @@
     height:100%;
 }
 
-.newStory .bottom-sheet {
-   max-height: 80% !important;
-}
-
 .lefttemplate {
     background-image:url(./images/thejoker.jpg);
     background-position: 140px 0px;

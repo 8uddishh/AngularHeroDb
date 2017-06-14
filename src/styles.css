@@ -583,3 +583,11 @@ body {
 .alert .row .text {
     font-size: 20px;
 }
+
+.modal-footer {
+    border-top: 1px solid rgba(160,160,160,0.2);
+}
+
+.modal-footer button {
+    margin-right: 10px !important;
+}

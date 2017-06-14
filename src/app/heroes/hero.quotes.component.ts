@@ -55,10 +55,12 @@ export class HeroQuotesComponent extends BaseComponent  {
         quote.canEdit = false;
     }
 
-    cancelAdd():void {
+    cancelAdd():boolean {
         this.canAdd = false;
         this.newQuote.emotion = QuoteEmotion.normal;
-        this.newQuote.name = '';  
+        this.newQuote.name = ''; 
+
+        return false; 
     }
 
     add():void {
@@ -100,10 +102,15 @@ export class HeroQuotesComponent extends BaseComponent  {
             });
     }
 
+    edit(quote:any) {
+        if(!this.confirmDelete)
+            quote.canEdit=true;
+    }
 
     delete(id:string) {
         this.confirmDelete = true;
         this.todelete = id;
+        return false;
     }
 
     ngOnInit(): void {

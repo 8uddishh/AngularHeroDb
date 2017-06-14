@@ -40,7 +40,7 @@
                   <div class="input-field col s12">
                         <p *ngIf="!userLoggedIn">{{comic.synopsis}}</p>
                         <textarea *ngIf="userLoggedIn" [(ngModel)]="comic.synopsis" id="comic-synopsis" class="materialize-textarea"></textarea>
-                        <label for="comic-synopsis" [class.active]="comic.synopsis">Company Info</label>
+                        <label for="comic-synopsis" [class.active]="comic.synopsis">Synopsis</label>
                     </div>
             </div>
           </div>

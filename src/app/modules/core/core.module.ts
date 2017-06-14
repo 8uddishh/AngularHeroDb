@@ -10,6 +10,7 @@ import { InMemoryDataService } from './memory/in.memory.data.service';
 import { LocalStorageService, SessionStorageService } from './storage/storage.service';
 import { TextBeautify } from './pipes/text-beautify';
 import { TextShortify } from './pipes/text-shortify';
+import { SafeStringify } from './pipes/safe-stringify';
 import { imageUrlCleanify } from './pipes/image-url-cleanify';
 import { sanitify } from './pipes/sanitify';
 import { QuoteBeautify } from './pipes/quote-beautify'
@@ -26,9 +27,11 @@ import { NavigationService } from './navigations/navigation.service';
     BrowserModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
-  declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, LoginComponent, BreadcrumbComponent, MenuComponent ],
+  declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, 
+    SafeStringify, LoginComponent, BreadcrumbComponent, MenuComponent ],
   providers: [],
-  exports: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, LoginComponent, BreadcrumbComponent, MenuComponent ]
+  exports: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, 
+    SafeStringify, LoginComponent, BreadcrumbComponent, MenuComponent ]
 })
 export class CoreModule {
     static forRoot(): ModuleWithProviders {

@@ -39,7 +39,7 @@
                 <div class="row">
                   <ul>
                     <li class="col s6" *ngFor="let quote of quotes;let i= index">
-                      <blockquote *ngIf="!quote.canEdit || !userLoggedIn" (click)="quote.canEdit=true" class="valign-wrapper" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
+                      <blockquote *ngIf="!quote.canEdit || !userLoggedIn" (click)="edit(quote)" class="valign-wrapper" [class.right]="i % 2 != 0" [class.anger]="quote.emotion == '1'" [class.satire]="quote.emotion == '2'" 
                         [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
                           <div class="row">{{quote.name | quoteBeautify}}</div>
                           <div>

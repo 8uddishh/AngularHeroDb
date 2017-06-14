@@ -47,9 +47,9 @@
                 </div>
                 <div class="row">
                 	<div class="input-field col s12">
-                    <p *ngIf="!userLoggedIn">{{hero.realName}}</p>
+                    <p *ngIf="!userLoggedIn">{{hero.realName | safeStringify}}</p>
 	              		<input  *ngIf="userLoggedIn" formControlName="realName" id="hero-real-name" type="text" class="validate" >
-	          			<label for="hero-real-name" [class.active]="hero.realName">Real Name</label>
+	          			<label for="hero-real-name" [class.active]="!userLoggedIn || hero.realName">Real Name</label>
               		</div>
                 </div>
                 <div class="row">
@@ -66,9 +66,9 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                        <p *ngIf="!userLoggedIn">{{hero.about}}</p>
+                        <p *ngIf="!userLoggedIn">{{hero.about | safeStringify}}</p>
                         <textarea *ngIf="userLoggedIn" formControlName="about" id="hero-about" class="materialize-textarea" required></textarea>
-                        <label for="hero-about" [class.active]="hero.about">About the hero</label>
+                        <label for="hero-about" [class.active]="!userLoggedIn || hero.about">About the hero</label>
                     </div>
                 </div>
               </div>

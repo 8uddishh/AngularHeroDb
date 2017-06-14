@@ -17,6 +17,9 @@ import * as _ from 'lodash';
   providers: [
     PublisherService
   ],
+  styleUrls: [ 
+      './publishers.component.css'
+  ],
   templateUrl: './publishers.component.html'
 })
 export class PublishersComponent extends BaseComponent {

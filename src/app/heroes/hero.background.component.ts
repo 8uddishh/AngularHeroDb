@@ -67,11 +67,12 @@ export class HeroBackgroundComponent extends BaseComponent  {
         this.selectedStory = story;
     }
 
-    cancelAdd():void {
+    cancelAdd():boolean {
         this.canAdd = false;
         this.newStory.templateType = TemplateType.leftimage;
         this.newStory.title = '';
         this.newStory.story = '';
+        return false;
     }
 
     add():void {

@@ -1,6 +1,7 @@
+<div *ngIf="canSave" class="modal-overlay"></div>
 <div class="row heroes-content">
   <div class="col s12">
-          <div class="card panel">
+          <div class="card panel above-overlay">
             <div class="card-content">
               
               <div class="card-title">
@@ -47,7 +48,14 @@
                     </div>
                     </form>
               </div>
-              <div class="amber alert alter" *ngIf="(!heroes || heroes.length == 0) && userLoggedIn">
+            </div>
+          </div>
+        </div>
+
+    <div class="col s12 list-panel">
+        <div class="card panel">
+            <div class="card-content">
+                    <div class="amber alert alter" *ngIf="(!heroes || heroes.length == 0) && userLoggedIn">
                         <div class="row">
                             <div class="col s1"><span class="fa fa-exclamation-triangle fa-3x"></span></div>
                             <div class="col s9 text">
@@ -67,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-              <div class="row container-row">
+            <div class="row container-row below-overlay">
                 <div class="col s3 card-list" *ngFor="let hero of heroes">
                   <div class="card">
                     <div class="card-image">
@@ -84,8 +92,9 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
+    </div>
+
     <popup-modal *ngIf="confirmDelete">
           <popup-modal-content>
               <h4>Tomare</h4>

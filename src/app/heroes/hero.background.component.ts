@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject }           from 'rxjs/Subject';
-
 import { BaseComponent } from './../modules/core/base/base.component';
 import { AuthService } from './../modules/core/auth/auth.service';
 import { Hero } from './hero.model';
@@ -13,6 +12,7 @@ import { HeroStory, TemplateType } from './hero.story.model';
 import * as _ from 'lodash';
 import { ToastrService } from './../modules/ux/toastr.service';
 import { Observable, Subscription } from 'rxjs';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-hero-background',
@@ -53,26 +53,37 @@ export class HeroBackgroundComponent extends BaseComponent  {
         super(authService);
     }
 
+    unDirtifyStoryName(s:string, story:any) {
+        setTimeout(() => {
+            story.story = s;
+        })
+    }
+
+    unDirtifyStoryTitle(title:string, story:any) {
+        setTimeout(() => {
+            story.title = title;
+        })
+    }
+
     loadStories():void {
         this.heroService.getStories(this.hero.id)
             .subscribe(stories => {
                 this.stories = _.map(stories, s => {
                     return { id: s.id, title: s.title, story: s.story, templateType:s.templateType, 
-                        underEdit: false, coordinates: s.coordinates, file: null, isImagechange:false, imageUrl: s.imageUrl }
+                        underEdit: false, coordinates: s.coordinates, file: null, isImagechange:false, 
+                        imageUrl: s.imageUrl, dirtyDirection: UndirtyDirection.none }
                 });
                 this.toastrService.showSuccess('Stories loaded successfully');
             });
     }
 
     edit(story:any) {
-        this.undirtyStory.title = story.title;
-        this.undirtyStory.story = story.story;
         story.underEdit = true
+        story.dirtyDirection = UndirtyDirection.none;
     }
 
     undo(story:any) {
-        story.title = this.undirtyStory.title;
-        story.story = this.undirtyStory.story;
+        story.dirtyDirection = UndirtyDirection.none;
         story.underEdit = false;
     }
 
@@ -93,7 +104,7 @@ export class HeroBackgroundComponent extends BaseComponent  {
         this.heroService.spawnStory(this.hero.id, this.newStory)
                 .then(story => {
                     this.stories.push({ id: story.id, title: story.title, story: story.story, templateType:story.templateType, 
-                        underEdit: false, coordinates: { x: 0, y: 0}, file: null, isImagechange:false   });
+                        underEdit: false, coordinates: { x: 0, y: 0}, file: null, isImagechange:false, dirtyDirection: UndirtyDirection.none   });
                     this.canAdd = false;
                     this.newStory.templateType = TemplateType.leftimage;
                     this.newStory.title = '';
@@ -109,6 +120,7 @@ export class HeroBackgroundComponent extends BaseComponent  {
             templateType:story.templateType, coordinates: story.coordinates, imageUrl: story.imageUrl})
             .then(res => {
                 story.underEdit = false;
+                story.dirtyDirection = UndirtyDirection.backward;
                 this.toastrService.showSuccess('Story saved successfully');
             })
     }

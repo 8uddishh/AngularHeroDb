@@ -11,6 +11,7 @@ import { HeroPower } from './hero.power.model';
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-hero-powers',
@@ -41,6 +42,12 @@ export class HeroPowersComponent extends BaseComponent {
         this.location.back();
     }
 
+    unDirtifyPowerName(name:string, power:any) {
+        setTimeout(() => {
+            power.name = name;
+        })
+    }
+
     markForDelete(power:any) {
         if(power.new) {
             this.powers = _.reject(this.powers, p => p.id == power.id);
@@ -62,14 +69,20 @@ export class HeroPowersComponent extends BaseComponent {
     }
 
     undo(power:any) {
+        if(!power.markForDelete) {
+            power.underEdit = false;
+            power.name = power.prevValue;
+            power.dirtyDirection = UndirtyDirection.forward;
+        }
         power.markForDelete = false;
-        power.underEdit = false;
-        power.name = power.prevValue;
     }
 
     save():void {
         this.heroService.savePowers(this.hero.id, this.powers)
             .then(result => {
+                _.each(this.powers, p => {
+                    p.dirtyDirection= UndirtyDirection.backward;
+                });
                 this.loadPowers();
             });
     }
@@ -78,7 +91,8 @@ export class HeroPowersComponent extends BaseComponent {
         this.heroService.getPowers(this.hero.id)
             .subscribe(powers => {
                 this.powers = _.map(powers, power => {
-                    return { id: power.id, name: power.name, prevValue: power.name, markForDelete:false, underEdit:false, new:false }
+                    return { id: power.id, name: power.name, prevValue: power.name, markForDelete:false, 
+                        underEdit:false, new:false, dirtyDirection: UndirtyDirection.none  }
                 });
                 this.toastrService.showSuccess('Powers loaded successfully');
             });

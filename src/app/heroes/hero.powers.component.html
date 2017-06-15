@@ -52,7 +52,8 @@
                       <div class="section power">
                         <div class="row">
                           <div class="input-field col s8 offset-s1" *ngIf="power.underEdit">
-                            <input type="text" class="validate" [(ngModel)]="power.name" >
+                            <input type="text" class="validate" [(ngModel)]="power.name" [undirtify]="power.dirtyDirection" 
+                            [currValue]="power.name" (onRevert)="unDirtifyPowerName($event, power)">
                           </div>
                           <div class="col s8 offset-s1 name" *ngIf="!power.underEdit" 
                             [ngClass]="power.new ? 'green-text text-darken-1': power.markForDelete ? 'red-text text-darken-1 strikethrough' : ''" >{{power.name}}</div>

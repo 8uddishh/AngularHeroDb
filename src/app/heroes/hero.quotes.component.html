@@ -50,7 +50,9 @@
                         [class.sad]="quote.emotion == '3'" [class.disgust]="quote.emotion == '4'" [class.joy]="quote.emotion == '5'">
                           <div class="row">
                             <div class="input-field col s12">
-                              <textarea [(ngModel)]="quote.name" [id]="'edit-quote-name-' + quote.id" class="materialize-textarea validate" required></textarea>
+                              <textarea [(ngModel)]="quote.name" [id]="'edit-quote-name-' + quote.id" class="materialize-textarea validate" 
+                                [undirtify]="quote.dirtyDirection" [currValue]="quote.name"
+                                (onRevert)="unDirtifyQuoteName($event, quote)" required></textarea>
                             <label [for]="'edit-quote-name-' + quote.id">Quote text</label>
                             </div>
                             <div class="fixed-action-btn horizontal edit">

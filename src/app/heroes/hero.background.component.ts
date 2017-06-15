@@ -33,6 +33,7 @@ export class HeroBackgroundComponent extends BaseComponent  {
 
     stories:any[];
     selectedStory:any;
+    undirtyStory:HeroStory = { title: '', story: '', coordinates: { x: 0, y: 0}, imageUrl: '' } as HeroStory;
     mouseMoved$ = new Subject<any>();
 
     left$ = Observable.interval(100);
@@ -44,7 +45,7 @@ export class HeroBackgroundComponent extends BaseComponent  {
     bottom$ = Observable.interval(100);
     bottomSubscribe:Subscription;
 
-    public todelete:string;
+    todelete:string;
     confirmDelete:boolean = false;
 
     constructor(protected authService: AuthService, private heroService: HeroService, private toastrService:ToastrService,
@@ -61,6 +62,18 @@ export class HeroBackgroundComponent extends BaseComponent  {
                 });
                 this.toastrService.showSuccess('Stories loaded successfully');
             });
+    }
+
+    edit(story:any) {
+        this.undirtyStory.title = story.title;
+        this.undirtyStory.story = story.story;
+        story.underEdit = true
+    }
+
+    undo(story:any) {
+        story.title = this.undirtyStory.title;
+        story.story = this.undirtyStory.story;
+        story.underEdit = false;
     }
 
     ImageClick(story:any) {
@@ -101,6 +114,10 @@ export class HeroBackgroundComponent extends BaseComponent  {
     }
 
     storyPicChange(file:any) {
+        this.undirtyStory.coordinates.x = this.selectedStory.coordinates.x;
+        this.undirtyStory.coordinates.y = this.selectedStory.coordinates.y;
+        this.undirtyStory.imageUrl = this.selectedStory.imageUrl;
+
        this.selectedStory.coordinates = { x: 0, y: 0};
        this.selectedStory.file = file;
        this.selectedStory.imageUrl = URL.createObjectURL(this.selectedStory.file);
@@ -120,6 +137,13 @@ export class HeroBackgroundComponent extends BaseComponent  {
             story.file = null;
             this.save(story);
         });
+    }
+
+    clearImage(story:any) {
+        story.coordinates.x = this.undirtyStory.coordinates.x;
+        story.coordinates.y = this.undirtyStory.coordinates.y;
+        story.imageUrl = this.undirtyStory.imageUrl;
+        story.file = null;
     }
 
     disagreeDelete(): void {

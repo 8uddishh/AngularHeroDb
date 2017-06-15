@@ -50,10 +50,10 @@
                               <button *ngIf="!story.underEdit && userLoggedIn" class="btn-floating btn-large waves-effect waves-light red pull-right" (click)="remove(story.id)">
                                 <i class="fa fa-times"></i>
                               </button>
-                              <button *ngIf="!story.underEdit && userLoggedIn" class="btn-floating btn-large waves-effect waves-light blue pull-right" style="margin-right:10px;" (click)="story.underEdit = true">
+                              <button *ngIf="!story.underEdit && userLoggedIn" class="btn-floating btn-large waves-effect waves-light blue pull-right" style="margin-right:10px;" (click)="edit(story)">
                                 <i class="fa fa-edit"></i>
                               </button>
-                              <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light yellow darken-1 pull-right" (click)="story.underEdit = false" >
+                              <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light yellow darken-1 pull-right" (click)="undo(story)" >
                                 <i class="fa fa-undo"></i>
                               </button>
                               <button *ngIf="story.underEdit" class="btn-floating btn-large waves-effect waves-light green pull-right" style="margin-right:10px;" (click)="save(story)">

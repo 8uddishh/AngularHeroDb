@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './navigations/menu.component';
 import { BreadcrumbComponent } from './navigations/breadcrumb.component';
 import { NavigationService } from './navigations/navigation.service';
+import { UndirtifyDirective } from './directives/undirtify';
 
 @NgModule({
   imports: [
@@ -28,10 +29,10 @@ import { NavigationService } from './navigations/navigation.service';
     InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   declarations: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, 
-    SafeStringify, LoginComponent, BreadcrumbComponent, MenuComponent ],
+    SafeStringify, UndirtifyDirective, LoginComponent, BreadcrumbComponent, MenuComponent ],
   providers: [],
   exports: [ TextBeautify, imageUrlCleanify, QuoteBeautify, TextShortify, sanitify, 
-    SafeStringify, LoginComponent, BreadcrumbComponent, MenuComponent ]
+    SafeStringify, UndirtifyDirective, LoginComponent, BreadcrumbComponent, MenuComponent ]
 })
 export class CoreModule {
     static forRoot(): ModuleWithProviders {

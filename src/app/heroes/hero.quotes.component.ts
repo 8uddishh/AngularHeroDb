@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { KeyValuePair } from './../modules/core/datastructures/data.dictionary';
 import { ToastrService } from './../modules/ux/toastr.service';
 import { Subscription } from 'rxjs';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-hero-powers',
@@ -45,14 +46,21 @@ export class HeroQuotesComponent extends BaseComponent  {
         this.heroService.getQuotes(this.hero.id)
             .subscribe(quotes => {
                 this.quotes = _.map(quotes, q => {
-                    return { id: q.id, name: q.name, emotion: q.emotion, canEdit: false }
+                    return { id: q.id, name: q.name, emotion: q.emotion, canEdit: false, dirtyDirection: UndirtyDirection.none }
                 });
                 this.toastrService.showSuccess('Quotes loaded successfully');
             });
     }
 
+    unDirtifyQuoteName(name:string, quote:any) {
+        setTimeout(() => {
+            quote.name = name;
+            quote.canEdit = false;
+        })
+    }
+
     undo(quote:any) {
-        quote.canEdit = false;
+        quote.dirtyDirection = UndirtyDirection.forward;
     }
 
     cancelAdd():boolean {
@@ -67,7 +75,7 @@ export class HeroQuotesComponent extends BaseComponent  {
         this.toastrService.showInfo('Adding new quote');
         this.heroService.spawnQuote(this.hero.id, this.newQuote)
                 .then(quote => {
-                    this.quotes.push({ id: quote.id, name: quote.name, emotion: quote.emotion, canEdit: false });
+                    this.quotes.push({ id: quote.id, name: quote.name, emotion: quote.emotion, canEdit: false, dirtyDirection: UndirtyDirection.none });
                     this.canAdd = false;
                     this.newQuote.emotion = QuoteEmotion.normal;
                     this.newQuote.name = '';
@@ -82,6 +90,7 @@ export class HeroQuotesComponent extends BaseComponent  {
             .then(res => {
                 quote.emotion = emotion;
                 quote.canEdit = false;
+                quote.dirtyDirection = UndirtyDirection.backward;
                 this.toastrService.showSuccess('Quote updated successfully');
             })
     }
@@ -103,8 +112,11 @@ export class HeroQuotesComponent extends BaseComponent  {
     }
 
     edit(quote:any) {
-        if(!this.confirmDelete)
+        if(!this.confirmDelete) {
             quote.canEdit=true;
+            quote.dirtyDirection = UndirtyDirection.none;
+        }
+            
     }
 
     delete(id:string) {

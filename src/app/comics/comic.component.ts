@@ -18,6 +18,7 @@ import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-comic-detail',
@@ -39,8 +40,9 @@ export class ComicComponent extends BaseComponent  {
     heroes:Hero[];
     comic:Comic;
     file:any;
-    isthumbnailChange:boolean = false;
     comicHeroes: Hero[] = [];
+
+    dirtyDirection:UndirtyDirection = UndirtyDirection.none;
 
     publisherName:string;
     originalPublisherId: string;
@@ -52,6 +54,21 @@ export class ComicComponent extends BaseComponent  {
         private comicService:ComicService, private navigationService:NavigationService, private toastrService:ToastrService, 
         private route: ActivatedRoute, private location: Location) {
       super(authService);
+    }
+
+    unDirtifyComicThumbnailUrl(url:string) {
+        setTimeout(() => {
+            this.comic.thumbnailUrl = url;
+        })
+    }
+
+    priorToImageChange():void {
+      this.dirtyDirection = UndirtyDirection.none;
+    }
+
+    undo() {
+      this.dirtyDirection = UndirtyDirection.forward;
+      this.file = null;
     }
 
     comicPicChange(file:any):void {
@@ -95,6 +112,7 @@ export class ComicComponent extends BaseComponent  {
               this.loadHeroes();
           }
         this.canManage = false;
+        this.dirtyDirection = UndirtyDirection.backward;
       });
     }
 

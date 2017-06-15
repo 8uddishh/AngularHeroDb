@@ -13,7 +13,7 @@
                   <ul *ngIf="!file">
                     <li>
                       <file-input [buttonClass]="'btn-floating yellow darken-4'" [iconClass]="'fa fa-user-circle'" [acceptVerbs]="'image/*'"
-                            [title]="'Update logo picture'" [file]="file" (preSelect)="isLogoChange=true;" (onError)="fileError($event)"
+                            [title]="'Update logo picture'" [file]="file" (preSelect)="priorToLogoChange()" (onError)="fileError($event)"
                             (postSelect)="logoChange($event)" >
                       </file-input>
                     </li>
@@ -29,9 +29,11 @@
 		<div class="col s12">
 			<div class="card hero" [class.notop]="!userLoggedIn" >
               <div class="card-image">
-                <img class="cover-pic" [src]="(publisher.coverPicUrl | imageUrlCleanify) | sanitify: 'url'">
+                <img class="cover-pic" [src]="(publisher.coverPicUrl | imageUrlCleanify) | sanitify: 'url'" [undirtify]="coverDirtyDirection" [currValue]="publisher.coverPicUrl"
+                                (onRevert)="unDirtifyCover($event, publisher)">
                 <div class="hero-profile" >
-                   <img [src]="(publisher.logoUrl | imageUrlCleanify) | sanitify: 'url'">
+                   <img [src]="(publisher.logoUrl | imageUrlCleanify) | sanitify: 'url'" [undirtify]="logoDirtyDirection" [currValue]="publisher.logoUrl"
+                                (onRevert)="unDirtifyLogo($event, publisher)">
                 </div>
                 <div class="card-title">{{publisher.name}}</div>
               </div>

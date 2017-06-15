@@ -13,13 +13,13 @@
                   <ul *ngIf="!file">
                     <li>
                       <file-input [buttonClass]="'btn-floating yellow darken-4'" [iconClass]="'fa fa-user-circle'" [acceptVerbs]="'image/*'"
-                            [title]="'Update logo picture'" [file]="file" (preSelect)="isLogoChange=true;" (onError)="fileError($event)"
+                            [title]="'Update logo picture'" [file]="file" (preSelect)="priorToLogoChange()" (onError)="fileError($event)"
                             (postSelect)="logoChange($event)" >
                       </file-input>
                     </li>
                     <li>
                       <file-input [buttonClass]="'btn-floating green'" [iconClass]="'fa fa-image'" [acceptVerbs]="'image/*'"
-                            [title]="'Update cover picture'" [file]="file" (preSelect)="isLogoChange=false;" (onError)="fileError($event)"
+                            [title]="'Update cover picture'" [file]="file" (preSelect)="priorToCoverChange()" (onError)="fileError($event)"
                             (postSelect)="coverPicChange($event)" >
                       </file-input>
                     </li>
@@ -30,9 +30,11 @@
 		<div class="col s12">
 			<div class="card hero" [class.notop]="!userLoggedIn" >
               <div class="card-image">
-                <img class="cover-pic" [src]="(hero.coverPicUrl | imageUrlCleanify) | sanitify: 'url'">
+                <img class="cover-pic" [src]="(hero.coverPicUrl | imageUrlCleanify) | sanitify: 'url'" [undirtify]="coverDirtyDirection" [currValue]="hero.coverPicUrl"
+                                (onRevert)="unDirtifyCover($event, hero)">
                 <div class="hero-profile" >
-                   <img [src]="(hero.logoUrl | imageUrlCleanify) | sanitify: 'url'">
+                   <img [src]="(hero.logoUrl | imageUrlCleanify) | sanitify: 'url'" [undirtify]="logoDirtyDirection" [currValue]="hero.logoUrl"
+                                (onRevert)="unDirtifyLogo($event, hero)">
                 </div>
                 <div class="card-title">{{hero.name}}</div>
               </div>

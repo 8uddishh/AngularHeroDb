@@ -3,7 +3,6 @@ import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/switchMap';
-
 import { Color } from './../modules/ux/components/color';
 import { Publisher } from './publisher.model';
 import { AuthService } from './../modules/core/auth/auth.service';
@@ -16,6 +15,7 @@ import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model'
 import { Subscription } from 'rxjs';
 import { KeyValuePair, Dictionary  } from './../modules/core/datastructures/data.dictionary';
 import * as _ from 'lodash';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-publisher-detail',
@@ -33,6 +33,8 @@ export class PublisherDetailComponent extends BaseComponent  {
   isLogoChange:boolean = false;
   publisherChange:Subscription;
   currentColor:string;
+  logoDirtyDirection:UndirtyDirection = UndirtyDirection.none;
+  coverDirtyDirection:UndirtyDirection = UndirtyDirection.none;
 
   constructor(protected authService: AuthService, private publisherService: PublisherService, private navigationService:NavigationService,
     private toastrService:ToastrService, private route: ActivatedRoute, private location: Location, public domsanitizer: DomSanitizer) {
@@ -41,6 +43,29 @@ export class PublisherDetailComponent extends BaseComponent  {
 
   goBack(): void {
     this.location.back();
+  }
+
+  unDirtifyCover(cover:string) {
+    setTimeout(() => {
+            console.log(cover)
+            this.publisher.coverPicUrl = cover;
+        })
+  }
+
+  unDirtifyLogo(logo:string) {
+    setTimeout(() => {
+            this.publisher.logoUrl = logo;
+        })
+  }
+
+  priorToLogoChange():void {
+      this.logoDirtyDirection = UndirtyDirection.none;
+      this.isLogoChange=true;
+  }
+
+  priorToCoverChange():void {
+      this.coverDirtyDirection = UndirtyDirection.none;
+      this.isLogoChange=false;
   }
 
   save(): void {
@@ -56,6 +81,8 @@ export class PublisherDetailComponent extends BaseComponent  {
                         this.publisherColors = colorDict;
                     });
                 this.currentColor = this.publisher.colorCode;
+                this.coverDirtyDirection = UndirtyDirection.backward;
+                this.logoDirtyDirection = UndirtyDirection.backward;
           });
   }
 
@@ -79,6 +106,8 @@ export class PublisherDetailComponent extends BaseComponent  {
 
   clearImage():void {
     this.file = null;
+    this.coverDirtyDirection = UndirtyDirection.forward;
+    this.logoDirtyDirection = UndirtyDirection.forward;
   }
 
   selectColor(color:Color): void {

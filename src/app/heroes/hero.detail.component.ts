@@ -15,6 +15,7 @@ import { BaseComponent } from './../modules/core/base/base.component';
 import { MenuScope } from './../modules/core/navigations/menu.model';
 import { BreadCrumbScope } from './../modules/core/navigations/breadcrumb.model';
 import { Subscription } from 'rxjs';
+import { UndirtyDirection } from './../modules/core/directives/undirtify';
 
 @Component({
   selector: 'my-hero-detail',
@@ -41,6 +42,8 @@ export class HeroDetailComponent extends BaseComponent  {
     });
 
   publishers: Publisher[];
+  logoDirtyDirection:UndirtyDirection = UndirtyDirection.none;
+  coverDirtyDirection:UndirtyDirection = UndirtyDirection.none;
 
     constructor(protected authService: AuthService, private heroService: HeroService, private publisherService: PublisherService,
     private navigationService:NavigationService, private toastrService:ToastrService, 
@@ -49,7 +52,30 @@ export class HeroDetailComponent extends BaseComponent  {
     }
 
     goBack(): void {
-    this.location.back();
+      this.location.back();
+  }
+
+  unDirtifyCover(cover:string) {
+    setTimeout(() => {
+            console.log(cover)
+            this.hero.coverPicUrl = cover;
+        })
+  }
+
+  unDirtifyLogo(logo:string) {
+    setTimeout(() => {
+            this.hero.logoUrl = logo;
+        })
+  }
+
+  priorToLogoChange():void {
+      this.logoDirtyDirection = UndirtyDirection.none;
+      this.isLogoChange=true;
+  }
+
+  priorToCoverChange():void {
+      this.coverDirtyDirection = UndirtyDirection.none;
+      this.isLogoChange=false;
   }
 
   submit(): void {
@@ -75,6 +101,9 @@ export class HeroDetailComponent extends BaseComponent  {
               this.file = null;
               this.toastrService.showSuccess('Hero saved successfully');
               this.heroForm.markAsPristine();
+
+              this.coverDirtyDirection = UndirtyDirection.backward;
+              this.logoDirtyDirection = UndirtyDirection.backward;
           });
   }
 
@@ -94,6 +123,8 @@ export class HeroDetailComponent extends BaseComponent  {
 
   clearImage():void {
     this.file = null;
+    this.coverDirtyDirection = UndirtyDirection.forward;
+    this.logoDirtyDirection = UndirtyDirection.forward;
   }
 
   addImage(): void {

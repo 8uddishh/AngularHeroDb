@@ -34,7 +34,7 @@
 
 blockquote {
     border-left: 6px solid #42a5f5;
-    min-height: 50px;
+    min-height: 100px;
     padding: 1.5rem;
     cursor:pointer;
     width:100%;

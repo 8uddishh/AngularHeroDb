@@ -1,5 +1,4 @@
 # Angular Hero App 
-[![Build Status][travis-badge]][travis-badge-url]
 
 This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
 modified to connect to a real-time firebase database. The application uses [materialize css](http://materializecss.com/) for the css styles.

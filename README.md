@@ -1,11 +1,9 @@
 # Angular Hero App 
 
 This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
-modified to connect to a real-time firebase database. The application uses [materialize css](http://materializecss.com/) for the css styles.
+modified to connect to a real-time firebase database. The application uses [materialize css](http://materializecss.com/) for the css styles. The intention is to explore the possiblities and power of angular4 and typescript generally.
 
-This app does have issues in general design and integration with firebase, like multi browser on same view get data and actions on one browser affecting the other. The intention is to explore the possiblities and power of angular4 and typescript generally.
-
-Same scenario would have different implementations within the app and that is completely intentional. The source can be used as a general starting point for a normal CRUD and can be build upon. The firebase integration in this app is not be followed (as I'm not a firebase ex[ert, we only needed a database store hence the implementaion is not perfect), we recommend replacing it with a web api for data and storage.
+Same scenario would have different implementations within the app and that is completely intentional. The source can be used as a general starting point for a normal CRUD and can be build upon. The firebase integration in this app is not to be followed for a realtime application design as it is not foolproof, we recommend replacing it with a web api for data and storage.
 
 ## Prerequisites
 
@@ -22,10 +20,10 @@ We recommend [nvm](https://github.com/creationix/nvm) for managing multiple vers
 
 ## Cloning the repo
 
-Clone this repo into new project folder (e.g., `hero-db`).
+Clone this repo into new project folder (e.g., `herodb`).
 ```shell
-git clone https://github.com/angular/quickstart  hero-db
-cd hero-db
+git clone https://github.com/8uddishh/AngularHeroDb  herodb
+cd herodb
 
 ```
 Discard the `.git` folder..
@@ -70,42 +68,20 @@ npm install
 npm start
 ```
 
->Doesn't work in _Bash for Windows_ which does not support servers as of January, 2017.
+## Seed the database (Optional)
 
-The `npm start` command first compiles the application, 
-then simultaneously re-compiles and runs the `lite-server`.
-Both the compiler and the server watch for file changes.
-
-Shut it down manually with `Ctrl-C`.
-
-You're ready to write your application.
-
-### npm scripts
-
-The npm installations from the original angular quickstart is available below.
-
-"We've captured many of the most useful commands in npm scripts defined in the `package.json`:
-
-* `npm start` - runs the compiler and a server at the same time, both in "watch mode".
-* `npm run build` - runs the TypeScript compiler once.
-* `npm run build:w` - runs the TypeScript compiler in watch mode; the process keeps running, awaiting changes to TypeScript files and re-compiling when it sees them.
-* `npm run serve` - runs the [lite-server](https://www.npmjs.com/package/lite-server), a light-weight, static file server, written and maintained by
-[John Papa](https://github.com/johnpapa) and
-[Christopher Martin](https://github.com/cgmartin)
-with excellent support for Angular apps that use routing.
-
-## Seed the database
-
-The seed.js file contains the necessary code to setup your firebase database with initial data. This should export data from data/hero-db.json and images from data/images. Do not forget to update the seed.config.json with your firebase api config to connect to your firebase account. Make sure that the authentication on your firebase app is turned off for the database and storage during the seed installation. One can run the seed file with command
-
-```shell
-
-    npm run seed
-
-```
-
-Once the seed is run successfully, turn on the authentication features on your firebase app. The rules for db is available in data/rules.json. One would need to manually copy paste these rules in the Firebase data.
+A seperate repository is available to seed the firebase db <a href="https://github.com/8uddishh/HeroAppSeed" target="_blank" title="Seed project">AngularHeroSeed</a>. This step is optional, one can clone the repository and follow the steps to set up the firebase db.
 
 ## Authentication
-The app allows Google, facebook, twitter and email sign in with firebase app. Do make sure that these features are turned on your firebase app.
+The app allows Google, facebook, twitter and email sign in with firebase app. Do make sure that these features are turned on your firebase project. Instructions to set up social authentications are available in <a href="https://firebase.google.com/docs/auth/" target="_blank" title="Authentication">Firebase Docs</a>. Google and email password authentication are straight forward. To enable Twitter and Facebook authentication one would need to create a app in Twitter / Facebook and retrieve oauth token from there. 
+
+The recommended rules for database and storage in your firebase project is also available in the seed repository. One can follow the instructions in the seed repository.
+
+## Bugs
+The application should work fine on most of the scenario. There are some known issues in multi browsers, especially when both browsers are on the same entity. Eg if two browsers are trying to update Batman, change in one is automaticaly getting updating other browser too. This is a firebase feature and hence we have not taken any steps to fix them.
+
+## Tomare
+We donot intend to update this repository regularly as this is not an utility. So no pull requests please. You are welcome to use this repository make modifications and use it in your own repository.
+
+Thanks n Cheers!!!!
 
